@@ -3,7 +3,7 @@ export function formatCurrency(
   category?: string,
   isView?: true,
 ): string {
-  if (typeof value === "undefined" || value === 0) return "TBA";
+  if (!value) return "TBA";
 
   const units = ["", "K", "M", "B", "T"];
   let number = parseFloat(String(value));
