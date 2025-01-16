@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
 
 interface TwitterFeedProps {
@@ -54,15 +55,14 @@ function TwitterFeed({ twitterUrl }: TwitterFeedProps) {
   const twitterNamePage = normalizedUrl.split("/")[3];
 
   return (
-    <div className="w-full">
-      <h1 className="mb-4 text-base text-white">
-        Feed da página {twitterNamePage}
-      </h1>
+    <div className="flex w-full flex-col gap-4">
+      <Button className="bg-[#1d9bf0] hover:bg-[#3da6ec] md:w-fit">
+        Twitter
+      </Button>
       <a
-        className="twitter-timeline data-width:w-full text-xl text-white"
+        className="twitter-timeline data-height:h-full data-width:w-full text-xl text-white"
         href={normalizedUrl} // URL normalizada para twitter.com
-        // data-width="600"
-        data-height="250"
+        data-height="450"
         data-chrome="noheader nofooter noborders"
       >
         Carregando feed do {twitterNamePage}...

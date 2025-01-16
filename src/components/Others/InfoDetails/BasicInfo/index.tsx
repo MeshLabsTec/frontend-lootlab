@@ -26,7 +26,9 @@ export default function BasicInfo({ info, title, size }: IProps) {
       <h2 className="text-sm font-medium uppercase tracking-wider text-white/70">
         {title}
       </h2>
-      <div className="mt-2 text-3xl font-semibold text-white">{info}</div>
+      <div className="mt-2 text-3xl font-semibold capitalize text-white">
+        {info}
+      </div>
     </div>
   );
 }
