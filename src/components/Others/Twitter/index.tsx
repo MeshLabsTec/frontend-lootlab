@@ -46,9 +46,7 @@ function TwitterFeed({ twitterUrl }: TwitterFeedProps) {
 
   if (!isValidTwitterUrl(normalizedUrl)) {
     return (
-      <h1 className="text-xl text-white">
-        URL inválida. Insira um link válido de perfil do Twitter.
-      </h1>
+      <h1 className="text-xl text-white">Perfil do Twitter indisponível.</h1>
     );
   }
 
