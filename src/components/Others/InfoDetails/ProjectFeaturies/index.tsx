@@ -6,9 +6,10 @@ import usePostStore from "@/stores/post.store";
 
 function ProjectFeaturies() {
   const { post } = usePostStore();
-  const midIdx = Math.ceil((post?.ProjectFeatures || [""]).length / 2);
-  const firstColumnFeatures = post?.ProjectFeatures.slice(0, midIdx);
-  const secondColumnFeatures = post?.ProjectFeatures.slice(midIdx);
+  const midIdx = Math.ceil((post?.projectFeatures || [""]).length / 2);
+  console.log(post);
+  const firstColumnFeatures = post?.projectFeatures.slice(0, midIdx);
+  const secondColumnFeatures = post?.projectFeatures.slice(midIdx);
 
   return (
     <div className="space-y-6">
@@ -18,7 +19,7 @@ function ProjectFeaturies() {
             {firstColumnFeatures?.map((feature) => (
               <FeatureItem
                 check={feature.isFeature}
-                key={feature.createdAt + feature.title}
+                key={feature.title}
                 info={feature.title}
               />
             ))}
@@ -27,7 +28,7 @@ function ProjectFeaturies() {
             {secondColumnFeatures?.map((feature) => (
               <FeatureItem
                 check={feature.isFeature}
-                key={feature.createdAt + feature.title}
+                key={feature.title}
                 info={feature.title}
               />
             ))}
@@ -39,7 +40,7 @@ function ProjectFeaturies() {
         <div className="flex flex-col gap-2">
           {post?.partnerships.map((partner) => (
             <Link
-              key={partner.id}
+              key={partner.type}
               href={partner.link_url}
               className="text-[#94a7c6] hover:text-[#ffffff]"
             >

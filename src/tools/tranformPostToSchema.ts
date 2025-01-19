@@ -4,7 +4,7 @@ import type { IPost } from "@/interfaces/interfaces";
 export function transformPostToSchema(post: IPost): FormDataToUpdate {
   return {
     category: post.category,
-    oldImageUrl: post.Image[0].url || "",
+    oldImageUrl: post.images[0] || "",
     postId: post.id,
     title: post.title || "",
     market_link: post.market_link || "",
@@ -13,18 +13,15 @@ export function transformPostToSchema(post: IPost): FormDataToUpdate {
     network: post.network || "",
     token: post.token || "",
     comment_author: post.comment_author || "",
-    Image: [{ id: post.Image[0].id }],
+    imagens: [post.images[0]],
     links: post.links.map((link) => ({
-      id: link.id,
       url: link.url,
     })),
-    projectFeatures: post.ProjectFeatures.map((feature) => ({
-      id: feature.id,
+    projectFeatures: post.projectFeatures.map((feature) => ({
       title: feature.title,
       isFeature: !!feature.isFeature,
     })),
     launchInfo: {
-      id: post.launchInfo.id,
       launchDate: new Date(post.launchInfo.launchDate),
       marketCap: post.launchInfo.marketCap,
       currentSupply: post.launchInfo.currentSupply,
@@ -32,12 +29,8 @@ export function transformPostToSchema(post: IPost): FormDataToUpdate {
       privateSale: post.launchInfo.privateSale,
       publicSale: post.launchInfo.publicSale,
     },
-    genres: post.genres.map((genre) => ({
-      id: genre.id,
-      name: genre.name,
-    })),
+    genres: post.genres.map((genre) => genre),
     partnerships: post.partnerships.map((partner) => ({
-      id: partner.id,
       type: partner.type,
       link_url: partner.link_url,
     })),

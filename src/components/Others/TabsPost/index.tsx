@@ -36,7 +36,6 @@ function TabsPost<T extends FieldValues>({
       | "financial"
       | "links"
       | "details") || "basic";
-
   return (
     <Suspense>
       <FormProvider {...methods}>

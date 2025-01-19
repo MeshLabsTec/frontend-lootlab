@@ -54,56 +54,26 @@ export interface IDataUpdatePost {
 }
 
 export interface ILink {
-  id: string;
-  postId: string;
   url: string;
-  createdAt: string;
-  updatedAt: string;
-  deletedAt?: string;
 }
 
 export interface IProjectFeature {
-  id: string;
   title: string;
   isFeature: boolean;
-  createdAt: string;
-  updatedAt: string;
-  postId: string;
 }
 
 export interface ILaunchInfo {
-  id: string;
   launchDate: string;
   marketCap: number;
   currentSupply: string;
   totalSupply: string;
   privateSale: number;
   publicSale: number;
-  createdAt: string;
-  updatedAt: string;
-  postId: string;
 }
 
 export interface IPartnership {
-  id: string;
   type?: string;
   link_url: string;
-  postId: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface IImage {
-  id: string;
-  url: string;
-  createdAt: string;
-  updatedAt: string;
-  postId: string;
-}
-
-export interface IGenre {
-  id: string;
-  name: string;
 }
 
 interface Author {
@@ -117,9 +87,9 @@ interface Author {
 }
 
 export interface IPost {
-  category: "NFT Jogos" | "NFT Artes";
   id: string;
   title: string;
+  category: "NFT Jogos" | "NFT Artes";
   market_link: string;
   score: number;
   investment: string;
@@ -130,15 +100,12 @@ export interface IPost {
   createdAt: string;
   updatedAt: string;
   authorId: string;
-  launchInfoId?: string;
-  projectFeaturesId?: string;
-  linkId?: string;
   links: ILink[];
-  ProjectFeatures: IProjectFeature[];
+  projectFeatures: IProjectFeature[];
   launchInfo: ILaunchInfo;
   partnerships: IPartnership[];
-  Image: IImage[];
-  genres: IGenre[];
+  images: string[];
+  genres: string[];
   author: Author;
 }
 

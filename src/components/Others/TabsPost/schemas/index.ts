@@ -23,10 +23,6 @@ const PartnershipSchema = z.object({
   link_url: z.string().url("URL da parceria inválida").optional(),
 });
 
-const Genre = z.object({
-  name: z.string().optional(),
-});
-
 export const FormSchema = z.object({
   title: z.string().min(1, "O Nome do Jogo é obrigatório"),
   category: z.enum(["NFT Jogos", "NFT Artes"], {
@@ -63,7 +59,13 @@ export const FormSchema = z.object({
   authorId: z.string().optional(),
 
   // Arrays e objetos opcionais
-  genres: z.array(Genre).optional(),
+  genres: z
+    .array(
+      z.object({
+        name: z.string().optional(),
+      }),
+    )
+    .optional(),
   links: z.array(LinkSchema).optional(),
   projectFeatures: z.array(ProjectFeatureSchema).optional(),
   launchInfo: LaunchInfoSchema.optional(),

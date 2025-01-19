@@ -37,9 +37,9 @@ export default function GameHeader() {
         <Image
           alt="Imagem do jogo"
           fill
-          key={post?.Image[0].url}
+          key={post?.images[0]}
           className="h-full w-full rounded-lg object-cover object-center"
-          src={post ? post.Image[0].url : imagemPlaceholder}
+          src={post ? post.images[0] : imagemPlaceholder}
         />
       </div>
       <Commentary />
