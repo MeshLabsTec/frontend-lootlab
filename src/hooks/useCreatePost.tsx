@@ -38,7 +38,7 @@ function useCreatePost() {
       queryClient.setQueryData([queryKey], (oldData: IPost[]) => {
         const newPost = {
           ...JSON.parse(variables.data.postData),
-          Image: [{ url: URL.createObjectURL(variables.data.file) }],
+          images: [{ url: URL.createObjectURL(variables.data.file) }],
           slug: generateSlug(JSON.parse(variables.data.postData).title),
         };
 
