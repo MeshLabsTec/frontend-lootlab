@@ -15,35 +15,23 @@ const ProjectFeatureSchema = z.object({
 // Esquema para validação de LaunchInfo
 const LaunchInfoSchema = z.object({
   launchDate: z.date().optional(),
-  marketCap: z
-    .number()
-    .min(0, "MarketCap deve ser um valor positivo")
-    .optional(),
-  currentSupply: z.string().optional(),
-  totalSupply: z
-    .number()
-    .min(0, "TotalSupply deve ser um valor positivo")
-    .optional(),
-  privateSale: z
-    .number()
-    .min(0, "PrivateSale deve ser um valor positivo")
-    .optional(),
-  publicSale: z
-    .number()
-    .min(0, "PublicSale deve ser um valor positivo")
-    .optional(),
+  currentSupply: z.string().optional().default(""),
+  marketCap: z.coerce.number().optional().default(0),
+  totalSupply: z.coerce.number().optional().default(0),
+  privateSale: z.coerce.number().optional().default(0),
+  publicSale: z.coerce.number().optional().default(0),
 });
 
 // Esquema para validação de Partnership
 const PartnershipSchema = z.object({
-  type: z.string().min(1, "O tipo da parceria é obrigatório").optional(),
+  type: z.string().optional(),
   link_url: z.string().url("A URL da parceria é inválida").optional(),
 });
 
 // Esquema principal para validação do Post
 export const FormSchemaToUpdate = z.object({
   title: z.string().optional(),
-  market_link: z.string().optional(),
+  marketLink: z.string().optional(),
   category: z.enum(["NFT Jogos", "NFT Artes"], {
     message: "Escolha uma categoria",
   }),
@@ -54,7 +42,7 @@ export const FormSchemaToUpdate = z.object({
   investment: z.string().optional(),
   network: z.string().optional(),
   token: z.string().optional(),
-  comment_author: z.string().optional(),
+  commentAuthor: z.string().optional(),
   file: z
     .instanceof(globalThis.FileList, { message: "Escolha um arquivo valido" })
     .refine((file) => (file.length ? file[0].size <= 5 * 1024 * 1024 : true), {
@@ -76,7 +64,7 @@ export const FormSchemaToUpdate = z.object({
   links: z.array(LinkSchema).default([]).optional(),
   projectFeatures: z.array(ProjectFeatureSchema).optional(),
   launchInfo: LaunchInfoSchema.optional(),
-  imagens: z.array(z.string()).optional(),
+  images: z.array(z.string()).optional(),
   genres: z.array(z.string()).optional(),
   partnerships: z.array(PartnershipSchema).default([]).optional(),
   postId: z.string(),

@@ -7,7 +7,6 @@ import usePostStore from "@/stores/post.store";
 function ProjectFeaturies() {
   const { post } = usePostStore();
   const midIdx = Math.ceil((post?.projectFeatures || [""]).length / 2);
-  console.log(post);
   const firstColumnFeatures = post?.projectFeatures.slice(0, midIdx);
   const secondColumnFeatures = post?.projectFeatures.slice(midIdx);
 

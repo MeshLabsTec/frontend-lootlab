@@ -10,7 +10,6 @@ export default function SectionGames() {
     queryFn: async () => await PostService.getPosts("NFT Jogos"),
   });
 
-  console.log(postsGames);
   return (
     <SectionLine
       href="nft-jogos"
