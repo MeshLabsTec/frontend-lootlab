@@ -29,7 +29,7 @@ export function transformPostToSchema(post: IPost): FormDataToUpdate {
       privateSale: post.launchInfo.privateSale || 0,
       publicSale: post.launchInfo.publicSale || 0,
     },
-    genres: post.genres.map((genre) => genre),
+    genres: post.genres.map((genre) => ({ name: genre })),
     partnerships: post.partnerships.map((partner) => ({
       type: partner.type,
       link_url: partner.link_url,

@@ -65,7 +65,13 @@ export const FormSchemaToUpdate = z.object({
   projectFeatures: z.array(ProjectFeatureSchema).optional(),
   launchInfo: LaunchInfoSchema.optional(),
   images: z.array(z.string()).optional(),
-  genres: z.array(z.string()).optional(),
+  genres: z
+    .array(
+      z.object({
+        name: z.string().optional(),
+      }),
+    )
+    .optional(),
   partnerships: z.array(PartnershipSchema).default([]).optional(),
   postId: z.string(),
   oldImageUrl: z.string().optional(),

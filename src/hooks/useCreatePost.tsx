@@ -38,7 +38,7 @@ function useCreatePost() {
       queryClient.setQueryData([queryKey], (oldData: IPost[]) => {
         const newPost = {
           ...JSON.parse(variables.data.postData),
-          images: [{ url: URL.createObjectURL(variables.data.file) }],
+          images: [URL.createObjectURL(variables.data.file)],
           slug: generateSlug(JSON.parse(variables.data.postData).title),
         };
 
@@ -60,11 +60,12 @@ function useCreatePost() {
     }
 
     // Remove file de data antes para enviar separadamente para a API.
-    const { file, ...postData } = data;
+    const { file, genres, ...postData } = data;
+    const newGenres = genres ? genres.map((genre) => genre.name) : [];
 
     await createPostFn({
       data: {
-        postData: JSON.stringify(postData),
+        postData: JSON.stringify({ genres: newGenres, ...postData }),
         file: file[0],
       },
       authorId: session?.user.id,
