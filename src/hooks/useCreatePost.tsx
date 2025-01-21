@@ -38,9 +38,16 @@ function useCreatePost() {
       queryClient.setQueryData([queryKey], (oldData: IPost[]) => {
         const newPost = {
           ...JSON.parse(variables.data.postData),
+          // corrigi o genres para ser um array de strings como recebido pela API
+          genres:
+            JSON.parse(variables.data.postData).genres.map(
+              (genre: { name: string }) => genre.name,
+            ) || [],
           images: [URL.createObjectURL(variables.data.file)],
           slug: generateSlug(JSON.parse(variables.data.postData).title),
         };
+
+        console.log(newPost);
 
         return [newPost, ...(oldData || [])];
       });
@@ -60,12 +67,11 @@ function useCreatePost() {
     }
 
     // Remove file de data antes para enviar separadamente para a API.
-    const { file, genres, ...postData } = data;
-    const newGenres = genres ? genres.map((genre) => genre.name) : [];
+    const { file, ...postData } = data;
 
     await createPostFn({
       data: {
-        postData: JSON.stringify({ genres: newGenres, ...postData }),
+        postData: JSON.stringify(postData),
         file: file[0],
       },
       authorId: session?.user.id,
