@@ -11,9 +11,13 @@ interface CardPostProps {
 
 export default function CardPost({ post, className }: CardPostProps) {
   const [isImageLoading, setIsImageLoading] = useState(true);
-  const displayedGenres = post.genres.slice(0, 2);
-  const remainingGenres = post.genres.slice(2);
+  const displayedGenres = post.genres.slice(0, 3);
+  const remainingGenres = post.genres.slice(3);
   const hasMoreGenres = remainingGenres.length > 0;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 079aa414eb158e577a958f452e292639909ac5b4
   return (
     <div className={cn("embla__slide mt-6 flex-[0_0_auto]", className)}>
       <Link
@@ -76,7 +80,7 @@ export default function CardPost({ post, className }: CardPostProps) {
                   +{remainingGenres.length}
                 </button>
 
-                <div className="invisible absolute bottom-full right-0 z-30 mb-2 min-w-32 translate-y-1 rounded-lg bg-slate-700 opacity-0 shadow-xl transition-all duration-300 group-hover/tooltip:visible group-hover/tooltip:translate-y-0 group-hover/tooltip:opacity-100">
+                <div className="invisible absolute bottom-full left-1/2 z-30 mb-2 min-w-32 -translate-x-1/2 translate-y-1 rounded-lg bg-slate-700 opacity-0 shadow-xl transition-all duration-300 group-hover/tooltip:visible group-hover/tooltip:translate-y-0 group-hover/tooltip:opacity-100">
                   <div className="flex flex-col gap-1 p-2">
                     {remainingGenres.map((genre) => (
                       <span
