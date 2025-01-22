@@ -92,7 +92,6 @@ function useUpdatePost(): UseUpdatePostReturn {
 
     // Remove file de data antes para enviar separadamente para a API.
     const { file, oldImageUrl, postId, ...postData } = data;
-    console.log(data);
 
     await updatePostFn({
       data: {

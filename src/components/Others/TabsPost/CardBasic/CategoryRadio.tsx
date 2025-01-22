@@ -14,6 +14,7 @@ import { Form } from "@/components/Form";
 const postCategories: IPostCategories[] = [
   { category: "NFT Jogos" },
   { category: "NFT Artes" },
+  { category: "Crypto" },
 ];
 
 function CategoryRadio() {
