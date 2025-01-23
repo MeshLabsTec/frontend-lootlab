@@ -8,11 +8,6 @@ import type { IProjectFeature } from "@/interfaces/interfaces";
 
 function ProjectFeaturies() {
   const { post } = usePostStore();
-<<<<<<< HEAD
-  const midIdx = Math.ceil((post?.projectFeatures || [""]).length / 2);
-  const firstColumnFeatures = post?.projectFeatures.slice(0, midIdx);
-  const secondColumnFeatures = post?.projectFeatures.slice(midIdx);
-=======
   const [features, setFeatures] = useState<IProjectFeature[] | []>([]);
 
   useEffect(() => {
@@ -24,7 +19,6 @@ function ProjectFeaturies() {
   const midIdx = Math.ceil((features || [""]).length / 2);
   const firstColumnFeatures = features.slice(0, midIdx);
   const secondColumnFeatures = features.slice(midIdx);
->>>>>>> 079aa414eb158e577a958f452e292639909ac5b4
 
   return (
     <div className="space-y-6">

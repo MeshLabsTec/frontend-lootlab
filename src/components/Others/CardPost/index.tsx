@@ -14,10 +14,7 @@ export default function CardPost({ post, className }: CardPostProps) {
   const displayedGenres = post.genres.slice(0, 3);
   const remainingGenres = post.genres.slice(3);
   const hasMoreGenres = remainingGenres.length > 0;
-<<<<<<< HEAD
-=======
 
->>>>>>> 079aa414eb158e577a958f452e292639909ac5b4
   return (
     <div className={cn("embla__slide mt-6 flex-[0_0_auto]", className)}>
       <Link

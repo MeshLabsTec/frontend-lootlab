@@ -87,13 +87,9 @@ function useUpdatePost(): UseUpdatePostReturn {
     }
 
     // Remove file de data antes para enviar separadamente para a API.
-<<<<<<< HEAD
-    const { file, oldImageUrl, postId, ...postData } = data;
-=======
     const { file, oldImageUrl, postId, genres, ...postData } = data;
 
     const newGenres = genres ? genres.map((genre) => genre.name) : [];
->>>>>>> 079aa414eb158e577a958f452e292639909ac5b4
 
     await updatePostFn({
       data: {
