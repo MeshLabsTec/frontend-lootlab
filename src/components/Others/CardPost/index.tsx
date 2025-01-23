@@ -11,8 +11,8 @@ interface CardPostProps {
 
 export default function CardPost({ post, className }: CardPostProps) {
   const [isImageLoading, setIsImageLoading] = useState(true);
-  const displayedGenres = post.genres.slice(0, 2);
-  const remainingGenres = post.genres.slice(2);
+  const displayedGenres = post.genres.slice(0, 3);
+  const remainingGenres = post.genres.slice(3);
   const hasMoreGenres = remainingGenres.length > 0;
 
   return (
@@ -35,7 +35,7 @@ export default function CardPost({ post, className }: CardPostProps) {
         <div className="relative h-[280px] w-full overflow-hidden">
           <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-slate-800/90" />
           <Image
-            src={post.Image[0].url}
+            src={post.images[0]}
             alt={`Cover image for ${post.title}`}
             fill
             sizes="280px"
@@ -60,10 +60,10 @@ export default function CardPost({ post, className }: CardPostProps) {
           <div className="flex flex-wrap gap-2">
             {displayedGenres.map((genre) => (
               <span
-                key={genre.name}
+                key={genre}
                 className="rounded-full bg-white/10 px-3 py-1 text-sm font-medium text-white/90 transition-all duration-300 group-hover:bg-white/15"
               >
-                {genre.name}
+                {genre}
               </span>
             ))}
 
@@ -77,14 +77,14 @@ export default function CardPost({ post, className }: CardPostProps) {
                   +{remainingGenres.length}
                 </button>
 
-                <div className="invisible absolute bottom-full right-0 z-30 mb-2 min-w-32 translate-y-1 rounded-lg bg-slate-700 opacity-0 shadow-xl transition-all duration-300 group-hover/tooltip:visible group-hover/tooltip:translate-y-0 group-hover/tooltip:opacity-100">
+                <div className="invisible absolute bottom-full left-1/2 z-30 mb-2 min-w-32 -translate-x-1/2 translate-y-1 rounded-lg bg-slate-700 opacity-0 shadow-xl transition-all duration-300 group-hover/tooltip:visible group-hover/tooltip:translate-y-0 group-hover/tooltip:opacity-100">
                   <div className="flex flex-col gap-1 p-2">
                     {remainingGenres.map((genre) => (
                       <span
-                        key={genre.name}
+                        key={genre}
                         className="whitespace-nowrap text-sm text-white/90"
                       >
-                        {genre.name}
+                        {genre}
                       </span>
                     ))}
                   </div>

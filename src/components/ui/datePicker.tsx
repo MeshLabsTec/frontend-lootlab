@@ -41,14 +41,17 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     },
     ref,
   ) => {
-    const [currentView, setCurrentView] = useState(value || new Date());
-    const [selectedDate, setSelectedDate] = useState<Date | null | undefined>(
-      value,
+    const [currentView, setCurrentView] = useState<Date>(value || new Date());
+    const [selectedDate, setSelectedDate] = useState<Date | null>(
+      value || null,
     );
 
+    const isValidDate = (date: Date | null): boolean =>
+      date instanceof Date && !isNaN(date.getTime());
+
     const formatDate = (date: Date | null) => {
-      if (!date) return "";
-      return new Intl.DateTimeFormat("pt-BR").format(date);
+      if (!isValidDate(date)) return "";
+      return new Intl.DateTimeFormat("pt-BR").format(date as Date);
     };
 
     const months = [
@@ -67,6 +70,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     ];
 
     const changeMonth = (increment: number) => {
+      if (!isValidDate(currentView)) return;
       setCurrentView(
         new Date(
           currentView.getFullYear(),
@@ -77,6 +81,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     };
 
     const changeYear = (increment: number) => {
+      if (!isValidDate(currentView)) return;
       setCurrentView(
         new Date(
           currentView.getFullYear() + increment,
@@ -87,6 +92,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     };
 
     const handleDateSelect = (date: Date) => {
+      if (!isValidDate(date)) return;
       setSelectedDate(date);
       if (onChange) {
         onChange(date);
@@ -126,7 +132,9 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
 
         <div className="flex items-center gap-1">
           <span className="text-sm font-medium">
-            {months[currentView.getMonth()]} {currentView.getFullYear()}
+            {isValidDate(currentView)
+              ? `${months[currentView.getMonth()]} ${currentView.getFullYear()}`
+              : ""}
           </span>
         </div>
 
@@ -157,6 +165,8 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
     );
 
     const CalendarGrid = () => {
+      if (!isValidDate(currentView)) return null;
+
       const firstDayOfMonth = new Date(
         currentView.getFullYear(),
         currentView.getMonth(),
@@ -226,7 +236,7 @@ const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>(
           type="hidden"
           id={props.id || "date-input"}
           ref={ref}
-          value={selectedDate ? selectedDate.toISOString() : ""}
+          value={selectedDate ? formatDate(selectedDate) : ""}
           {...props}
         />
         <Popover>

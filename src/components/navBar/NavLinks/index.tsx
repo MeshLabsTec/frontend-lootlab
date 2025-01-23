@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import NavLink from "./NavLink";
-import Tooltip from "@/components/Others/Tooltip";
 import Link from "next/link";
 
 interface IProps {
@@ -21,9 +20,7 @@ function NavLinks({ orientation = "horizontal" }: IProps) {
       </Link>
       <NavLink href="/nft-jogos">NFT Jogos</NavLink>
       <NavLink href="/nft-artes">NTF Artes</NavLink>
-      <Tooltip title="Em breve">
-        <NavLink href="/">Crypto</NavLink>
-      </Tooltip>
+      <NavLink href="/crypto">Crypto</NavLink>
     </ul>
   );
 }

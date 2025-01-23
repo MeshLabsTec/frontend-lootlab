@@ -6,7 +6,9 @@ import type {
 import { Api } from "@/providers/Api";
 
 export default class PostService {
-  public static async getPosts(category?: "NFT Jogos" | "NFT Artes") {
+  public static async getPosts(
+    category?: "NFT Jogos" | "NFT Artes" | "Crypto",
+  ) {
     try {
       const response = await Api.get<IPost[]>(
         `/post?${category ? `category=${category}` : ""}`,

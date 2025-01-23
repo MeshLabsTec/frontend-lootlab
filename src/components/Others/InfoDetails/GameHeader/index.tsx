@@ -47,10 +47,9 @@ export default function GameHeader() {
         <Image
           alt="Imagem do jogo"
           fill
-          unoptimized
+          key={post?.images[0]}
           className="h-full w-full rounded-lg object-cover object-center"
-          src={getImageSrc()}
-          onError={() => setImgError(true)}
+          src={post ? post.images[0] : imagemPlaceholder}
         />
       </div>
       <Commentary />

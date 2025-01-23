@@ -47,12 +47,10 @@ function useUpdatePost(): UseUpdatePostReturn {
         const newPost = {
           id: variables.postId,
           ...JSON.parse(variables.data.postData || ""),
-          Image: [
-            {
-              url: variables.data.file
-                ? URL.createObjectURL(variables.data.file)
-                : variables.imageUrl,
-            },
+          images: [
+            variables.data.file
+              ? URL.createObjectURL(variables.data.file)
+              : variables.imageUrl,
           ],
           slug: generateSlug(
             JSON.parse(variables.data.postData || "{ title: '' }").title,
@@ -61,8 +59,6 @@ function useUpdatePost(): UseUpdatePostReturn {
 
         // Adiciona verificação se oldData existe
         if (!oldData) return [newPost];
-
-        console.log("oldDataUpdate", oldData);
 
         return [newPost, ...oldData.filter(({ id }) => id !== post?.id)];
       });
@@ -91,11 +87,13 @@ function useUpdatePost(): UseUpdatePostReturn {
     }
 
     // Remove file de data antes para enviar separadamente para a API.
-    const { file, oldImageUrl, postId, ...postData } = data;
+    const { file, oldImageUrl, postId, genres, ...postData } = data;
+
+    const newGenres = genres ? genres.map((genre) => genre.name) : [];
 
     await updatePostFn({
       data: {
-        postData: JSON.stringify(postData),
+        postData: JSON.stringify({ genres: newGenres, ...postData }),
         file: file ? file[0] : new DataTransfer().files[0],
       },
       imageUrl: oldImageUrl,
