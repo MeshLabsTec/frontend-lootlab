@@ -110,5 +110,5 @@ export interface IPost {
 }
 
 export interface IPostCategories {
-  category: "NFT Jogos" | "NFT Artes";
+  category: "NFT Jogos" | "NFT Artes" | "Crypto";
 }

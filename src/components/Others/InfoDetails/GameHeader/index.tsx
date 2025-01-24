@@ -15,6 +15,15 @@ export default function GameHeader() {
   const { post } = usePostStore();
   const { data: session } = useSession();
   const router = useRouter();
+  // const [imgError, setImgError] = useState(false);
+
+  // Função para lidar com a URL da imagem de forma segura
+  // const getImageSrc = () => {
+  //   if (imgError || !post?.Image?.[0]?.url) {
+  //     return imagemPlaceholder;
+  //   }
+  //   return post.Image[0].url;
+  // };
 
   return (
     <div className="relative grid gap-6 md:grid-cols-3">
