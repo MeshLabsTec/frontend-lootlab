@@ -7,7 +7,7 @@ export function transformPostToSchema(post: IPost): FormDataToUpdate {
     oldImageUrl: post.images[0] || "",
     postId: post.id,
     title: post.title || "",
-    market_link: post.market_link || "",
+    marketLink: post.market_link || "",
     score: post.score ?? null,
     investment: String(post.investment || ""),
     network: post.network || "",
