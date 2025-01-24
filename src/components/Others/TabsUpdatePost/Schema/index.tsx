@@ -24,7 +24,7 @@ const LaunchInfoSchema = z.object({
 
 // Esquema para validação de Partnership
 const PartnershipSchema = z.object({
-  type: z.string().optional(),
+  type: z.string().optional().default(""),
   link_url: z.string().url("A URL da parceria é inválida").optional(),
 });
 

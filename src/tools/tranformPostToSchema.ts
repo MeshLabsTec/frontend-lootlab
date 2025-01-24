@@ -31,8 +31,8 @@ export function transformPostToSchema(post: IPost): FormDataToUpdate {
     },
     genres: post.genres.map((genre) => ({ name: genre })),
     partnerships: post.partnerships.map((partner) => ({
-      type: partner.type,
-      link_url: partner.link_url,
+      type: partner.type || "",
+      link_url: partner.link_url || "",
     })),
   };
 }
