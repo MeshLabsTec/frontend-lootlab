@@ -28,7 +28,7 @@ const PartnershipSchema = z.object({
   link_url: z.string().url("A URL da parceria é inválida").optional(),
 });
 
-// Esquema principal para validação do Post
+// Esquema principal para validação do Post.
 export const FormSchemaToUpdate = z.object({
   title: z.string().optional(),
   marketLink: z.string().optional(),
