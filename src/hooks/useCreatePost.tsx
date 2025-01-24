@@ -68,7 +68,6 @@ function useCreatePost() {
 
     // Remove file de data antes para enviar separadamente para a API.
     const { file, ...postData } = data;
-
     await createPostFn({
       data: {
         postData: JSON.stringify(postData),

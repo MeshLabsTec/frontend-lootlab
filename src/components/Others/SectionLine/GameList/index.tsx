@@ -7,7 +7,7 @@ import type { IPost } from "@/interfaces/interfaces";
 interface IProps {
   posts: IPost[];
   isLoading: boolean;
-  category: "nft-jogos" | "nft-artes";
+  category: "nft-jogos" | "nft-artes" | "crypto";
 }
 
 function GameList({ category, posts, isLoading }: IProps) {

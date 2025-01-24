@@ -31,8 +31,8 @@ const PartnershipSchema = z.object({
 // Esquema principal para validação do Post
 export const FormSchemaToUpdate = z.object({
   title: z.string().optional(),
-  marketLink: z.string().optional(),
-  category: z.enum(["NFT Jogos", "NFT Artes"], {
+  market_link: z.string().optional(),
+  category: z.enum(["NFT Jogos", "NFT Artes", "Crypto"], {
     message: "Escolha uma categoria",
   }),
   score: z.coerce

@@ -25,7 +25,7 @@ const PartnershipSchema = z.object({
 
 export const FormSchema = z.object({
   title: z.string().min(1, "O Nome do Jogo é obrigatório"),
-  category: z.enum(["NFT Jogos", "NFT Artes"], {
+  category: z.enum(["NFT Jogos", "NFT Artes", "Crypto"], {
     message: "Escolha uma categoria",
   }),
   score: z.coerce
