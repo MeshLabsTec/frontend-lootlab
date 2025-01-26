@@ -91,6 +91,8 @@ function useUpdatePost(): UseUpdatePostReturn {
 
     const newGenres = genres ? genres.map((genre) => genre.name) : [];
 
+    console.log("PostData", postData);
+
     await updatePostFn({
       data: {
         postData: JSON.stringify({ genres: newGenres, ...postData }),
