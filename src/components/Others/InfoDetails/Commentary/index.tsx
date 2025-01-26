@@ -3,7 +3,6 @@ import usePostStore from "@/stores/post.store";
 
 function Commentary() {
   const { post } = usePostStore();
-  console.log(post?.commentAuthor);
   return (
     <div className="max-h-[23rem] min-h-[23rem] rounded-lg border-[#1c2f4a] bg-[#132238] md:col-span-2">
       <div className="h-full w-full overflow-y-auto scrollbar-thin scrollbar-track-[#1c2f4a] scrollbar-thumb-[#2d4a75] hover:scrollbar-thumb-[#3d5a85]">
