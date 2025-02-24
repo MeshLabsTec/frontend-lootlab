@@ -24,14 +24,14 @@ const LaunchInfoSchema = z.object({
 
 // Esquema para validação de Partnership
 const PartnershipSchema = z.object({
-  type: z.string().optional(),
+  type: z.string().optional().default(""),
   link_url: z.string().url("A URL da parceria é inválida").optional(),
 });
 
-// Esquema principal para validação do Post
+// Esquema principal para validação do Post.
 export const FormSchemaToUpdate = z.object({
   title: z.string().optional(),
-  market_link: z.string().optional(),
+  marketLink: z.string().optional(),
   category: z.enum(["NFT Jogos", "NFT Artes", "Crypto"], {
     message: "Escolha uma categoria",
   }),

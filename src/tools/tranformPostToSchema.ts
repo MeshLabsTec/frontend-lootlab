@@ -7,12 +7,12 @@ export function transformPostToSchema(post: IPost): FormDataToUpdate {
     oldImageUrl: post.images[0] || "",
     postId: post.id,
     title: post.title || "",
-    market_link: post.market_link || "",
+    marketLink: post.marketLink || "",
     score: post.score ?? null,
     investment: String(post.investment || ""),
     network: post.network || "",
     token: post.token || "",
-    commentAuthor: post.comment_author || "",
+    commentAuthor: post.commentAuthor || "",
     images: [post.images[0]],
     links: post.links.map((link) => ({
       url: link.url,
@@ -31,8 +31,8 @@ export function transformPostToSchema(post: IPost): FormDataToUpdate {
     },
     genres: post.genres.map((genre) => ({ name: genre })),
     partnerships: post.partnerships.map((partner) => ({
-      type: partner.type,
-      link_url: partner.link_url,
+      type: partner.type || "",
+      link_url: partner.link_url || "",
     })),
   };
 }

@@ -35,7 +35,7 @@ export const FormSchema = z.object({
   investment: z.string().optional(),
   network: z.string().optional(),
   token: z.string().optional(),
-  comment_author: z.string().min(1, "O comentário do autor é obrigatório"),
+  commentAuthor: z.string().min(1, "O comentário do autor é obrigatório"),
   file: z
     .instanceof(globalThis.FileList, { message: "Escolha um arquivo valido" })
     .refine((file) => file.length, {
@@ -55,7 +55,7 @@ export const FormSchema = z.object({
           "Apenas imagens nos formatos JPEG, PNG, GIF ou WEBP são permitidas",
       },
     ),
-  market_link: z.string().url("URL de mercado inválida").optional(),
+  marketLink: z.string().url("URL de mercado inválida").optional(),
   authorId: z.string().optional(),
 
   // Arrays e objetos opcionais

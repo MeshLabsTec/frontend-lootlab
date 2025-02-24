@@ -69,12 +69,12 @@ function BasicContent() {
       <Form.Label htmlFor="comment" title="Comentário">
         <Textarea
           className={classNames("min-h-24 overflow-hidden border", {
-            "border-red-500": errors.comment_author?.message,
+            "border-red-500": errors.commentAuthor?.message,
           })}
           id="comment"
-          {...register("comment_author")}
+          {...register("commentAuthor")}
         />
-        <Form.ErrorMessage error={errors.comment_author?.message} />
+        <Form.ErrorMessage error={errors.commentAuthor?.message} />
       </Form.Label>
       <CategoryRadio />
     </CardContent>

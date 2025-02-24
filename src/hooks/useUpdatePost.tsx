@@ -45,7 +45,6 @@ function useUpdatePost(): UseUpdatePostReturn {
       // seta o novo post no cache para nao precisar buscar novamente no banco
       queryClient.setQueryData([queryKey], (oldData: IPost[] | undefined) => {
         const newPost = {
-          id: variables.postId,
           ...JSON.parse(variables.data.postData || ""),
           images: [
             variables.data.file
@@ -60,7 +59,7 @@ function useUpdatePost(): UseUpdatePostReturn {
         // Adiciona verificação se oldData existe
         if (!oldData) return [newPost];
 
-        return [newPost, ...oldData.filter(({ id }) => id !== post?.id)];
+        return [newPost, ...oldData.filter(({ slug }) => slug !== post?.slug)];
       });
 
       if (data?.status === 200) {

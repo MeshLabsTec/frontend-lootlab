@@ -44,11 +44,7 @@ export function Login() {
         );
       }}
     >
-      <DialogTrigger asChild>
-        <Button className="bg-[#283563] font-bold text-white transition-all hover:bg-[#283563]/60">
-          Login
-        </Button>
-      </DialogTrigger>
+      <DialogTrigger asChild></DialogTrigger>
       <DialogContent className="border-none bg-lootlab-bg-main sm:max-w-[425px]">
         <DialogHeader className="">
           <DialogTitle className="text-3xl text-white">Login</DialogTitle>

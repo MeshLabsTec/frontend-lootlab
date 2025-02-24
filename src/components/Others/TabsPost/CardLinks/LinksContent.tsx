@@ -39,13 +39,13 @@ function LinksContent() {
         <Form.Label>
           <AccordionManager
             titleTrigger="MarketCap Adress"
-            error={errors?.market_link?.message}
+            error={errors?.marketLink?.message}
           >
             <AccordionContent>
               <MarketCapAddresForm />
             </AccordionContent>
           </AccordionManager>
-          <Form.ErrorMessage error={errors?.market_link?.message} />
+          <Form.ErrorMessage error={errors?.marketLink?.message} />
         </Form.Label>
       )}
     </CardContent>

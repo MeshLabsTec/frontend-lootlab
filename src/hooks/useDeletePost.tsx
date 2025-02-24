@@ -19,11 +19,11 @@ function useDeletePost() {
     mutationFn: PostService.deletePost,
     onSuccess(data) {
       const queryKey =
-        post?.category === "NFT Jogos" ? "postsGames" : "postArtes";
+        post?.category === "NFT Jogos" ? "postsGames" : "postsArtes";
 
       // deleta o post no cache para nao precisar buscar novamente no banco os posts antigos.
       queryClient.setQueryData([queryKey], (oldData: IPost[]) => {
-        return [...(oldData || []).filter(({ id }) => id !== post?.id)];
+        return [...(oldData || []).filter(({ slug }) => slug !== post?.slug)];
       });
       if (data) {
         Toast.success((data as any).data.message);

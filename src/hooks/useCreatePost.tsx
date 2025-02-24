@@ -47,8 +47,6 @@ function useCreatePost() {
           slug: generateSlug(JSON.parse(variables.data.postData).title),
         };
 
-        console.log(newPost);
-
         return [newPost, ...(oldData || [])];
       });
     },

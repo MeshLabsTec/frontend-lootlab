@@ -7,8 +7,6 @@ import type { FormDataToUpdate } from "./Schema";
 function TabsUpdatePost() {
   const { status, methods, onSubmit } = useUpdatePost();
 
-  console.log(methods.formState.errors);
-
   return (
     <TabsPost<FormDataToUpdate>
       action="Salvar"

@@ -11,7 +11,7 @@ function Commentary() {
             COMENTÁRIO
           </h2>
           <p className="w-full whitespace-pre-wrap break-words text-lg italic leading-relaxed">
-            {post?.comment_author || "Sem comentários"}
+            {post?.commentAuthor || "Sem comentários"}
           </p>
         </div>
       </div>

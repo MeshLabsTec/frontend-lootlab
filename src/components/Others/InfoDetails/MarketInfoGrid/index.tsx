@@ -15,14 +15,14 @@ function MarketInfoGrid() {
   };
 
   // Função para formatar o supply atual com base na categoria
-  const formatSupply = (value: any, category: string) => {
-    const supply = safeNumber(value);
-    if (supply === 0) return "";
+  // const formatSupply = (value: any, category: string) => {
+  //   const supply = safeNumber(value);
+  //   if (supply === 0) return "";
 
-    return category === "NFT Artes"
-      ? formatCurrency(supply, category, true)
-      : String(supply);
-  };
+  //   return category === "NFT Artes"
+  //     ? formatCurrency(supply, category, true)
+  //     : String(supply);
+  // };
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
@@ -37,7 +37,7 @@ function MarketInfoGrid() {
           </MarketInfo>
 
           <MarketInfo title="Supply Atual">
-            {formatSupply(launchInfo?.currentSupply, post?.category || "")}
+            {launchInfo?.currentSupply}
           </MarketInfo>
 
           {post?.category === "NFT Jogos" && (

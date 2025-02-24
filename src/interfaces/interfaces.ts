@@ -90,12 +90,12 @@ export interface IPost {
   id: string;
   title: string;
   category: "NFT Jogos" | "NFT Artes";
-  market_link: string;
+  marketLink: string;
   score: number;
   investment: string;
   token: string;
   network: string;
-  comment_author: string;
+  commentAuthor: string;
   slug: string;
   createdAt: string;
   updatedAt: string;
