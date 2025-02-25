@@ -14,7 +14,7 @@ export function NFTJogosComponent() {
     <div className="flex h-full w-full flex-col items-start gap-4 px-[5%]">
       <NFTHeaderFilter
         iconTitle={<IoGameControllerOutline />}
-        title="NFT Jogos"
+        title="NFT Games"
       />
       <NFTPostList isLoading={isLoading} posts={filteredPosts} />
     </div>

@@ -8,7 +8,7 @@ export default function BasicInfoGrid() {
   return (
     <div className="row-span-2 flex h-full flex-col justify-center gap-6 md:col-span-1">
       <BasicInfo info={post?.title || ""} title="TITLE" />
-      <BasicInfo info={post?.author.name || ""} title="ANALYST" />
+      <BasicInfo info={post?.author.name || ""} title="AUTHOR" />
       <div className="grid grid-cols-2 gap-6">
         <BasicInfo title="SCORE" info={String(post?.score || "") || "0"} />
         <BasicInfo title="NETWORK" info={post?.network || "N/I"} />

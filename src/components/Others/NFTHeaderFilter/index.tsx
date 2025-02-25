@@ -69,11 +69,11 @@ function NFTHeaderFilter({ iconTitle, title }: INFTHeaderFilterProps) {
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectLabel>Filtro</SelectLabel>
-                  <SelectItem value="recent">Mais Recentes</SelectItem>
-                  <SelectItem value="oldest">Mais Antigos</SelectItem>
-                  <SelectItem value="order">Ordem Alfabética</SelectItem>
-                  <SelectItem value="all">Sem filtros</SelectItem>
+                  <SelectLabel>Filter</SelectLabel>
+                  <SelectItem value="recent">Most Recent</SelectItem>
+                  <SelectItem value="oldest">Oldest</SelectItem>
+                  <SelectItem value="order">Alphabetical Order</SelectItem>
+                  <SelectItem value="all">No filters</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>

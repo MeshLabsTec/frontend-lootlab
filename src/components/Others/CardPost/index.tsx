@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import imagemPlaceholder from "@/images/imagem-placeholder.webp";
 
 interface CardPostProps {
   post: IPost;
@@ -35,7 +36,7 @@ export default function CardPost({ post, className }: CardPostProps) {
         <div className="relative h-[280px] w-full overflow-hidden">
           <div className="absolute inset-0 z-10 bg-gradient-to-b from-transparent via-transparent to-slate-800/90" />
           <Image
-            src={post.images[0]}
+            src={post.images[0] || imagemPlaceholder}
             alt={`Cover image for ${post.title}`}
             fill
             sizes="280px"
