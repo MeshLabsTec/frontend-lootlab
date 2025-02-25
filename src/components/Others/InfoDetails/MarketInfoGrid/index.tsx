@@ -26,7 +26,7 @@ function MarketInfoGrid() {
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
-      <CardInfo title="INFORMAÇÕES DE MERCADO">
+      <CardInfo title="MARKET INFORMATION">
         <div className="space-y-1">
           <MarketInfo title="Launch">
             <span>
@@ -60,7 +60,7 @@ function MarketInfoGrid() {
         </div>
       </CardInfo>
 
-      <CardInfo title="INFORMAÇÕES DE VENDA">
+      <CardInfo title="SALES INFORMATION">
         <div className="space-y-1">
           <MarketInfo title="Private Sale">
             {formatCurrency(
