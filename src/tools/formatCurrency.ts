@@ -24,5 +24,5 @@ export function formatCurrency(
     return `${formattedNumber}${units[unitIndex]} - NFTs`;
   }
 
-  return `${formattedNumber} ${units[unitIndex]}`;
+  return `${formattedNumber}${units[unitIndex]}`;
 }
