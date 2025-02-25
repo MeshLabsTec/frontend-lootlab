@@ -27,7 +27,7 @@ export function LayoutFooter() {
           </nav> */}
           <nav className="flex gap-4 text-lootlab-font-base/70">
             <a
-              href=""
+              href="https://x.com/Lootlabz"
               target="_blank"
               className="flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:text-lootlab-font-base"
               rel="noopener noreferrer"
@@ -35,7 +35,7 @@ export function LayoutFooter() {
               <FaTwitter />
             </a>
             <a
-              href=""
+              href="https://discord.gg/2UfBvkVB"
               target="_blank"
               className="flex h-10 w-10 items-center justify-center rounded-full text-lg transition-colors hover:text-lootlab-font-base"
               rel="noopener noreferrer"
@@ -43,7 +43,7 @@ export function LayoutFooter() {
               <FaDiscord />
             </a>
             <a
-              href=""
+              href="https://t.me/Lootlabzyxz"
               target="_blank"
               className="flex h-10 w-10 items-center justify-center rounded-full text-lg transition-colors hover:text-lootlab-font-base"
               rel="noopener noreferrer"

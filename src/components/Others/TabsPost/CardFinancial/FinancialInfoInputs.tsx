@@ -6,7 +6,7 @@ import classNames from "classnames";
 import { useFormContext } from "react-hook-form";
 
 const financialInfos: IInfosCard<LaunchInfo>[] = [
-  { title: "Total Supply", pathRegister: "totalSupply", type: "number" },
+  { title: "Total suply", pathRegister: "totalSupply", type: "number" },
   { title: "Private Sale", pathRegister: "privateSale", type: "number" },
   { title: "Public Sale", pathRegister: "publicSale", type: "number" },
   { title: "Market Cap", pathRegister: "marketCap", type: "number" },
