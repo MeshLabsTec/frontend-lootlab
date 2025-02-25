@@ -45,9 +45,7 @@ function TwitterFeed({ twitterUrl }: TwitterFeedProps) {
   };
 
   if (!isValidTwitterUrl(normalizedUrl)) {
-    return (
-      <h1 className="text-xl text-white">Twitter profile unavailable.</h1>
-    );
+    return <h1 className="text-xl text-white">Twitter profile unavailable.</h1>;
   }
 
   const twitterNamePage = normalizedUrl.split("/")[3];
@@ -63,7 +61,7 @@ function TwitterFeed({ twitterUrl }: TwitterFeedProps) {
         data-height="450"
         data-chrome="noheader nofooter noborders"
       >
-        Carregando feed do {twitterNamePage}...
+        Loading feed from {twitterNamePage}...
       </a>
     </div>
   );
