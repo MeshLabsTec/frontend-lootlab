@@ -12,15 +12,15 @@ const banners = [
     banner: bannerIlluvium,
     logo: illuviumLogo,
     description:
-      "Mergulhe em um universo aberto repleto de aventuras épicas, colete Illuvials poderosos, batalhe contra outros jogadores e descubra riquezas escondidas em um ambiente de tirar o fôlego.",
-    descriptionTitle: "Explore um novo mundo com Illuvium",
+      "Immerse yourself in an open universe filled with epic adventures, collect powerful Illuvials, battle other players, and discover hidden riches in a breathtaking environment.",
+    descriptionTitle: "Explore a new world with Illuvium",
   },
   {
     banner: bannerAxieInfinity,
     logo: axieLogo,
     description:
-      "Mergulhe em um universo aberto repleto de aventuras épicas, colete Illuvials poderosos, batalhe contra outros jogadores e descubra riquezas escondidas em um ambiente de tirar o fôlego.",
-    descriptionTitle: "Explore um novo mundo com Axie Infinity",
+      "Immerse yourself in an open universe filled with epic adventures, collect powerful Illuvials, battle other players, and discover hidden riches in a breathtaking environment.",
+    descriptionTitle: "Explore a new world with Axie Infinity",
   },
 ];
 

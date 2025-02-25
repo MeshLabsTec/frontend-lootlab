@@ -22,7 +22,7 @@ function ProjectFeaturies() {
 
   return (
     <div className="space-y-6">
-      <CardInfo title="CARACTERÍSTICAS DO PROJETO">
+      <CardInfo title="PROJECT FEATURES">
         <div className="grid gap-4 md:grid-cols-2">
           <div className="space-y-4">
             {firstColumnFeatures?.map((feature, idx) => (
@@ -45,7 +45,7 @@ function ProjectFeaturies() {
         </div>
       </CardInfo>
 
-      <CardInfo title="PARCERIAS">
+      <CardInfo title="PARTNERSHIPS">
         <div className="flex flex-col gap-2">
           {post?.partnerships.map((partner, idx) => (
             <Link

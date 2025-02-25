@@ -8,10 +8,10 @@ function Commentary() {
       <div className="h-full w-full overflow-y-auto scrollbar-thin scrollbar-track-[#1c2f4a] scrollbar-thumb-[#2d4a75] hover:scrollbar-thumb-[#3d5a85]">
         <div className="p-6">
           <h2 className="mb-6 text-sm font-medium uppercase tracking-wider text-white/70">
-            COMENTÁRIO
+            COMMENT
           </h2>
           <p className="w-full whitespace-pre-wrap break-words text-lg italic leading-relaxed">
-            {post?.commentAuthor || "Sem comentários"}
+            {post?.commentAuthor || "No comments"}
           </p>
         </div>
       </div>

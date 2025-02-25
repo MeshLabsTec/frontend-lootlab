@@ -46,7 +46,7 @@ function TwitterFeed({ twitterUrl }: TwitterFeedProps) {
 
   if (!isValidTwitterUrl(normalizedUrl)) {
     return (
-      <h1 className="text-xl text-white">Perfil do Twitter indisponível.</h1>
+      <h1 className="text-xl text-white">Twitter profile unavailable.</h1>
     );
   }
 

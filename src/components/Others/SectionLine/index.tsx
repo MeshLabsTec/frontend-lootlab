@@ -27,15 +27,15 @@ function SectionLine({
           </Common.CommonTitleSection>
           <span className="hidden text-white/60 md:block">
             {posts?.length ?? 0}{" "}
-            {(posts?.length ?? 0) > 1 ? "Resultados" : "Resultado"}
+            {(posts?.length ?? 0) > 1 ? "Results" : "Result"}
           </span>
         </div>
         <Link
           href={`/${href}`}
           className="flex gap-1 text-white/60 transition-all hover:text-white"
         >
-          <span className="hidden md:block">Ver </span>
-          mais
+          <span className="hidden md:block">See </span>
+          more
         </Link>
       </div>
 

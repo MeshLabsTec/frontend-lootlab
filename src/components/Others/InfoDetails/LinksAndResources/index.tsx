@@ -9,7 +9,7 @@ function LinksAndResources() {
   return (
     <div className="rounded-lg border border-[#1c2f4a] bg-[#132238] p-6">
       <h2 className="mb-6 text-sm font-medium uppercase tracking-wider text-white/70">
-        DOCUMENTAÇÃO E LINKS
+        DOCUMENTATION AND LINKS
       </h2>
       <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
         {post?.links.map((link, index) => (

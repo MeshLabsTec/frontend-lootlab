@@ -15,7 +15,7 @@ function SectionArtes() {
       href="nft-artes"
       iconTitle={<IoBrushOutline />}
       isLoading={isLoadingArtes}
-      title="NFT Artes"
+      title="NFT Arts"
       posts={postsArtes}
     />
   );

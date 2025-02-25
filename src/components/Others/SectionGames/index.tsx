@@ -16,7 +16,7 @@ export default function SectionGames() {
       iconTitle={<IoGameControllerOutline />}
       isLoading={isLoading}
       posts={postsGames}
-      title="NFT Jogos"
+      title="NFT Games"
     />
   );
 }
