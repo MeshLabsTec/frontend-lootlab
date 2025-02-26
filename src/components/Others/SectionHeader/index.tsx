@@ -14,11 +14,11 @@ export default function SectionHeader({
   return (
     <div className="relative flex max-h-full max-w-[1000px] flex-col items-start gap-16 pl-[5%] pt-[86px]">
       <Image src={sectionTitle} alt="asdf" className="h-20 w-fit" />
-      <div className="w-full space-y-2 text-left text-xl font-normal leading-[130%] text-lootlab-font-highlight">
-        <span className="text-7xl font-bold leading-[90%] text-lootlab-font-base">
+      <div className="w-full space-y-8 text-left text-xl font-normal leading-[130%] text-lootlab-font-highlight">
+        <span className="text-4xl font-bold leading-10 text-lootlab-font-base">
           {sectionDescriptionTitle}
         </span>
-        <h1 className="text-xl text-[#cecece] 2xl:text-2xl">
+        <h1 className="w-[50%] text-lg leading-[30px] text-[#cecece]">
           {sectionDescription}
         </h1>
       </div>

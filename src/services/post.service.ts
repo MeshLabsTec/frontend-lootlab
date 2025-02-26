@@ -12,6 +12,13 @@ export default class PostService {
     try {
       const response = await Api.get<IPost[]>(
         `/post?${category ? `category=${category}` : ""}`,
+        {
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": "true",
+            "Content-Type": "application/json",
+          },
+        },
       );
       return response.data;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
