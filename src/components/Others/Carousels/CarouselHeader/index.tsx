@@ -6,8 +6,17 @@ import { useEffect, useState } from "react";
 import illuviumLogo from "../../../../images/Illuvium-logo.svg";
 import axieLogo from "../../../../images/Axie-logo.svg";
 import SectionHeader from "../../SectionHeader";
+import bannerSabong from "../../../../images/Banner-SabongSaga.png";
+import sabongLogo from "../../../../images/sabong.svg";
 
 const banners = [
+  {
+    banner: bannerSabong,
+    logo: sabongLogo,
+    description:
+      "The Genesis Collectionfeatures 2,222 exclusive chickens. Prized in the Sabong Saga universe. Essential for future collections.",
+    descriptionTitle: "Explore a new world with SABONG SAGA",
+  },
   {
     banner: bannerIlluvium,
     logo: illuviumLogo,
@@ -19,7 +28,7 @@ const banners = [
     banner: bannerAxieInfinity,
     logo: axieLogo,
     description:
-      "Immerse yourself in an open universe filled with epic adventures, collect powerful Illuvials, battle other players, and discover hidden riches in a breathtaking environment.",
+      "Immerse yourself in a dynamic universe filled with strategic battles, train and evolve your Axies, compete against other players, and earn rewards in an ever-expanding ecosystem.",
     descriptionTitle: "Explore a new world with Axie Infinity",
   },
 ];

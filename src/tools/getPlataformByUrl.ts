@@ -4,6 +4,7 @@ const platformIcons: { [key: string]: TIcon } = {
   "twitter.com": "twitter",
   "/x.com": "twitter",
   "discord.com": "discord",
+  "discord.gg": "discord",
   "instagram.com": "instagram",
   "t.me": "telegram",
   "telegram.org": "telegram",
