@@ -12,14 +12,6 @@ export default class PostService {
     try {
       const response = await Api.get<IPost[]>(
         `/post?${category ? `category=${category}` : ""}`,
-        {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": "true",
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        },
       );
       return response.data;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -30,14 +22,7 @@ export default class PostService {
 
   public static async getPostBySlug(slug: string) {
     try {
-      const response = await Api.get<IPost>(`/post/slug/${slug}`, {
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": "true",
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      });
+      const response = await Api.get<IPost>(`/post/slug/${slug}`);
       return response.data;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
@@ -56,11 +41,7 @@ export default class PostService {
       const response = await Api.delete(`/post/${id}`, {
         headers: {
           Authorization: `Bearer ${authorizationToken}`,
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": "true",
-          "Content-Type": "application/json",
         },
-        withCredentials: true,
       });
       return response;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -91,8 +72,6 @@ export default class PostService {
         headers: {
           Authorization: `Bearer ${authorizationToken}`,
           "Content-Type": "multipart/form-data",
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Credentials": "true",
         },
         withCredentials: true,
       });

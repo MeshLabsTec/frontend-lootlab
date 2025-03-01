@@ -10,14 +10,7 @@ interface CarouselImage {
 
 export default class CarouselService {
   public static async getCarousel(): Promise<CarouselImage[]> {
-    return Api.get(`/carousel`, {
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": "true",
-        "Content-Type": "application/json",
-      },
-      withCredentials: true,
-    })
+    return Api.get(`/carousel`, {})
       .then((response) => response)
       .then((response) => response.data)
       .catch((e) => e);
@@ -29,21 +22,14 @@ export default class CarouselService {
 
     return Api.post("/carousel/upload", formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": "true",
         Authorization: `Bearer ${token}`,
       },
-      withCredentials: true,
     }).then((response) => response.data);
   }
 
   public static async deleteByIdCarousel(id: string, token: string) {
     return Api.delete(`/carousel/${id}`, {
       headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Credentials": "true",
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     }).then((response) => response.data);
