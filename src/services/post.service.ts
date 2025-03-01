@@ -18,6 +18,7 @@ export default class PostService {
             "Access-Control-Allow-Credentials": "true",
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         },
       );
       return response.data;
@@ -35,6 +36,7 @@ export default class PostService {
           "Access-Control-Allow-Credentials": "true",
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       });
       return response.data;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -58,6 +60,7 @@ export default class PostService {
           "Access-Control-Allow-Credentials": "true",
           "Content-Type": "application/json",
         },
+        withCredentials: true,
       });
       return response;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -91,6 +94,7 @@ export default class PostService {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Credentials": "true",
         },
+        withCredentials: true,
       });
 
       return response;
@@ -129,6 +133,7 @@ export default class PostService {
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Credentials": "true",
           },
+          withCredentials: true,
         });
       }
 

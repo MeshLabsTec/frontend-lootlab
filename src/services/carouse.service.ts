@@ -16,6 +16,7 @@ export default class CarouselService {
         "Access-Control-Allow-Credentials": "true",
         "Content-Type": "application/json",
       },
+      withCredentials: true,
     })
       .then((response) => response)
       .then((response) => response.data)
@@ -33,6 +34,7 @@ export default class CarouselService {
         "Access-Control-Allow-Credentials": "true",
         Authorization: `Bearer ${token}`,
       },
+      withCredentials: true,
     }).then((response) => response.data);
   }
 
