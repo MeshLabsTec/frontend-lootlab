@@ -3,15 +3,18 @@ import * as z from "zod";
 
 const formSchemaUpload = z.object({
   image: z
-    .instanceof(FileList)
-    .refine((files) => files.length > 0, {
+    .custom<FileList>((val) => val instanceof FileList, {
+      message: "Arquivo inválido",
+    })
+    .refine((files) => files && files.length > 0, {
       message: "O arquivo é obrigatório",
     })
     .refine(
       (files) =>
+        files &&
         ["image/jpeg", "image/png"].includes(files.item(0)?.type ?? ""),
       {
-        message: "Formato inválido. Use JPG, PNG",
+        message: "Formato inválido. Use JPG ou PNG",
       },
     ),
 });
