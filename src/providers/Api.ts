@@ -3,6 +3,6 @@ import axios from "axios";
 const baseURL =
   process.env.NODE_ENV === "production"
     ? process.env.NEXT_PUBLIC_URL_BACKEND
-    : "http://localhost:3333/v1";
+    : process.env.NEXT_PUBLIC_URL_BACKEND;
 
-export const Api = axios.create({ baseURL });
+export const Api = axios.create({ baseURL, withCredentials: true });

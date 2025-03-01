@@ -44,7 +44,9 @@ function FormInputImage({
           },
         )}
       >
-        <span className="text-nowrap font-medium">Escolher Arquivo</span>
+        <span className="cursor-pointer text-nowrap font-medium">
+          Escolher Arquivo
+        </span>
 
         <span className="max-w-[70%] overflow-hidden text-ellipsis text-nowrap">
           {getFormattedImageName(imageName) || "Nenhum arquivo escolhido..."}

@@ -24,6 +24,12 @@ function AuthConditionalRender() {
           >
             Criar Post
           </Link>
+          <Link
+            className="flex h-9 cursor-pointer select-none items-center rounded-sm px-2 py-1 text-lootlab-font-highlight transition-all hover:bg-[#242C3A] hover:text-white"
+            href="/upload-image"
+          >
+            Upload
+          </Link>
         </div>
       ) : (
         <Suspense>

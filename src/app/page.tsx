@@ -6,7 +6,7 @@ import SectionArtes from "@/components/SectionArtes";
 export default function Home() {
   return (
     <LayoutPage className="gap-16">
-      <div className="relative flex h-[90vh] w-full justify-between 2xl:h-[75vh]">
+      <div className="relative flex w-full justify-between">
         <CarouselHeader />
         <hr className="absolute bottom-0 left-0 h-[1px] w-full border-0 bg-lootlab-font-highlight opacity-40" />
       </div>

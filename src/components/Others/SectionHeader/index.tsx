@@ -18,7 +18,6 @@ export default function SectionHeader({
         src={sectionTitle}
         alt="asdf"
         className={classNames("h-20 w-fit", {
-          // Solução adaptada para o momento em questão, mudar isso o quanto antes.
           "h-28":
             sectionDescriptionTitle === "Explore a new world with SABONG SAGA",
         })}
@@ -27,7 +26,7 @@ export default function SectionHeader({
         <span className="text-7xl font-bold leading-[90%] text-lootlab-font-base">
           {sectionDescriptionTitle}
         </span>
-        <h1 className="text-xl text-[#cecece] 2xl:text-2xl">
+        <h1 className="w-[50%] text-lg leading-[30px] text-[#cecece]">
           {sectionDescription}
         </h1>
       </div>

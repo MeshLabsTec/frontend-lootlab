@@ -1,85 +1,89 @@
 "use client";
 import Image from "next/image";
-import bannerIlluvium from "../../../../images/Banner-illuvium.png";
-import bannerAxieInfinity from "../../../../images/Banner-AxieInfinity.png";
 import { useEffect, useState } from "react";
-import illuviumLogo from "../../../../images/Illuvium-logo.svg";
-import axieLogo from "../../../../images/Axie-logo.svg";
-import SectionHeader from "../../SectionHeader";
-import bannerSabong from "../../../../images/Banner-SabongSaga.png";
-import sabongLogo from "../../../../images/sabong.svg";
-
-const banners = [
-  {
-    banner: bannerSabong,
-    logo: sabongLogo,
-    description:
-      "The Genesis Collectionfeatures 2,222 exclusive chickens. Prized in the Sabong Saga universe. Essential for future collections.",
-    descriptionTitle: "Explore a new world with SABONG SAGA",
-  },
-  {
-    banner: bannerIlluvium,
-    logo: illuviumLogo,
-    description:
-      "Immerse yourself in an open universe filled with epic adventures, collect powerful Illuvials, battle other players, and discover hidden riches in a breathtaking environment.",
-    descriptionTitle: "Explore a new world with Illuvium",
-  },
-  {
-    banner: bannerAxieInfinity,
-    logo: axieLogo,
-    description:
-      "Immerse yourself in a dynamic universe filled with strategic battles, train and evolve your Axies, compete against other players, and earn rewards in an ever-expanding ecosystem.",
-    descriptionTitle: "Explore a new world with Axie Infinity",
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import CarouselService from "@/services/carouse.service";
+import loot from "../../../../images/banner4.png";
 
 function CarouselHeader() {
   const [currIndex, setCurrIndex] = useState<number>(0);
+
+  const { data: banners } = useQuery({
+    queryKey: ["carousel"],
+    queryFn: async () => await CarouselService.getCarousel(),
+  });
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrIndex((prevIndex) => (prevIndex + 1) % banners.length);
-    }, 10000);
-    return () => clearInterval(interval);
-  }, [currIndex]);
+    if (banners && banners.length === 0) return;
+    if (banners && banners.length > 0) {
+      const interval = setInterval(() => {
+        setCurrIndex((prevIndex) => (prevIndex + 1) % banners.length);
+      }, 10000);
+      return () => clearInterval(interval);
+    }
+  }, [banners, currIndex]);
 
   return (
-    <div className="h-[40vw] max-h-[800px] min-h-[400px] w-full">
-      <SectionHeader
-        sectionDescriptionTitle={banners[currIndex].descriptionTitle}
-        sectionDescription={banners[currIndex].description}
-        sectionTitle={banners[currIndex].logo}
-      />
-      <div className="absolute inset-0 -z-20 h-full w-full opacity-100">
-        <Image
-          src={banners[currIndex].banner}
-          key={currIndex}
-          alt="Banner Illuvium"
-          className="h-full w-full object-cover object-top opacity-85"
-          priority
-        />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-lootlab-bg-main via-transparent" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-lootlab-bg-main via-transparent" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-lootlab-bg-main via-transparent" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-lootlab-bg-main via-transparent" />
-      </div>
-      <div className="absolute bottom-7 right-[5%] flex gap-5">
-        {banners.map(({ banner }, index) => (
-          <div
-            key={index}
-            onClick={() => setCurrIndex(index)}
-            className={`cursor-pointer ${
-              currIndex === index
-                ? "border-2 shadow-custom shadow-lootlab-font-highlight"
-                : ""
-            } flex h-16 w-28 rounded-md border-lootlab-font-base transition-transform duration-200 ease-in-out hover:border-2`}
-          >
+    <div className="flex h-auto w-full justify-center">
+      <div className="h-full w-full overflow-hidden">
+        <div className="inset-0 -z-20 h-full w-full opacity-100">
+          {banners && banners.length > 0 ? (
             <Image
-              src={banner}
+              src={banners[currIndex]?.path}
+              key={currIndex}
+              width={1920}
+              height={600}
               alt="Banner"
-              className="h-full w-full rounded-lg object-cover"
+              className="h-full w-full object-contain opacity-85"
+              priority
             />
-          </div>
-        ))}
+          ) : (
+            <Image
+              src={loot}
+              key={currIndex}
+              width={1920}
+              height={600}
+              alt="Banner"
+              className="h-full w-full object-contain opacity-85"
+              priority
+            />
+          )}
+        </div>
+        <div className="absolute bottom-7 right-[5%] flex gap-5">
+          {banners && banners.length > 0 ? (
+            banners.map(({ path }, index) => (
+              <div
+                key={index}
+                onClick={() => setCurrIndex(index)}
+                className={`cursor-pointer ${
+                  currIndex === index
+                    ? "border-2 shadow-custom shadow-lootlab-font-highlight"
+                    : ""
+                } flex h-16 w-28 rounded-md border-lootlab-font-base transition-transform duration-200 ease-in-out hover:border-2`}
+              >
+                <Image
+                  src={path}
+                  width={1920}
+                  height={600}
+                  alt="Banner"
+                  className="h-full w-full max-w-[600px] rounded-lg object-contain"
+                />
+              </div>
+            ))
+          ) : (
+            <div
+              className={`flex h-16 w-28 cursor-pointer rounded-md border-2 border-lootlab-font-base shadow-custom shadow-lootlab-font-highlight transition-transform duration-200 ease-in-out hover:border-2`}
+            >
+              <Image
+                src={loot}
+                width={1920}
+                height={600}
+                alt="Banner"
+                className="h-full w-full rounded-lg object-contain"
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
