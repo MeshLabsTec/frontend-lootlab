@@ -9,10 +9,6 @@ import { queryClient } from "@/lib/react-query";
 import CarouselService from "@/services/carouse.service";
 import { formResolver } from "./schemas/formUpload.schema";
 
-interface FormData {
-  image: FileList;
-}
-
 export default function UploadImageComponent() {
   const [preview, setPreview] = useState<string | null>(null);
   const { data: session } = useSession();
@@ -24,7 +20,7 @@ export default function UploadImageComponent() {
     watch,
     formState: { errors },
     reset,
-  } = useForm<FormData>({
+  } = useForm({
     resolver: formResolver,
   });
 
@@ -49,14 +45,14 @@ export default function UploadImageComponent() {
     },
   });
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = (data: any) => {
     const file = data.image?.[0];
     if (file) {
       mutate(file);
     }
   };
 
-  const selectedFiles = watch("image");
+  const selectedFiles = watch("image") as FileList | undefined;
 
   useEffect(() => {
     if (!selectedFiles?.length) return;
@@ -89,7 +85,9 @@ export default function UploadImageComponent() {
             className="mt-2 block w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-indigo-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-indigo-500"
           />
           {errors.image && (
-            <p className="mt-1 text-sm text-red-500">{errors.image.message}</p>
+            <p className="mt-1 text-sm text-red-500">
+              {errors.image.message as any}
+            </p>
           )}
         </div>
 
