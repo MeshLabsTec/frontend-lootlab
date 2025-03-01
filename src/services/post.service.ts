@@ -29,7 +29,13 @@ export default class PostService {
 
   public static async getPostBySlug(slug: string) {
     try {
-      const response = await Api.get<IPost>(`/post/slug/${slug}`);
+      const response = await Api.get<IPost>(`/post/slug/${slug}`, {
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Type": "application/json",
+        },
+      });
       return response.data;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
@@ -48,6 +54,9 @@ export default class PostService {
       const response = await Api.delete(`/post/${id}`, {
         headers: {
           Authorization: `Bearer ${authorizationToken}`,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": "true",
+          "Content-Type": "application/json",
         },
       });
       return response;
@@ -79,6 +88,8 @@ export default class PostService {
         headers: {
           Authorization: `Bearer ${authorizationToken}`,
           "Content-Type": "multipart/form-data",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": "true",
         },
       });
 
@@ -115,6 +126,8 @@ export default class PostService {
           headers: {
             Authorization: `Bearer ${authorizationToken}`,
             "Content-Type": "multipart/form-data",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Credentials": "true",
           },
         });
       }
