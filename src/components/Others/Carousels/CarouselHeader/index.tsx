@@ -7,6 +7,7 @@ import loot from "../../../../images/banner4.png";
 
 function CarouselHeader() {
   const [currIndex, setCurrIndex] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
   const { data: banners } = useQuery({
     queryKey: ["carousel"],
@@ -23,10 +24,20 @@ function CarouselHeader() {
     }
   }, [banners, currIndex]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
-    <div className="flex h-auto w-full justify-center">
+    <div className="relative flex h-auto w-full justify-center">
       <div className="h-full w-full overflow-hidden">
-        <div className="inset-0 -z-20 h-full w-full opacity-100">
+        {/* Imagem do Banner */}
+        <div className="relative inset-0 -z-20 h-full w-full opacity-100">
           {banners && banners.length > 0 ? (
             <Image
               src={banners[currIndex]?.path}
@@ -34,7 +45,7 @@ function CarouselHeader() {
               width={1920}
               height={600}
               alt="Banner"
-              className="h-full w-full object-contain opacity-85"
+              className="h-full w-full object-cover opacity-85"
               priority
             />
           ) : (
@@ -44,13 +55,39 @@ function CarouselHeader() {
               width={1920}
               height={600}
               alt="Banner"
-              className="h-full w-full object-contain opacity-85"
+              className="h-full w-full object-cover opacity-85"
               priority
             />
           )}
         </div>
-        <div className="absolute bottom-7 right-[5%] flex gap-5">
-          {banners && banners.length > 0 ? (
+
+        {/* Bullets ou Miniaturas */}
+        <div
+          className={`absolute flex gap-5 ${
+            isMobile
+              ? "bottom-2 left-1/2 z-10 -translate-x-1/2"
+              : "bottom-7 right-[5%]"
+          }`}
+        >
+          {isMobile ? (
+            <div className="flex gap-2">
+              {banners &&
+                banners.length > 0 &&
+                banners.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrIndex(index)}
+                    className={`h-4 w-4 rounded-full border-[1px] border-white transition-transform duration-300 ease-in-out ${
+                      currIndex === index
+                        ? "scale-125 bg-[#283563] shadow-lg"
+                        : "bg-gray-300 hover:scale-110"
+                    }`}
+                  />
+                ))}
+            </div>
+          ) : (
+            banners &&
+            banners.length > 0 &&
             banners.map(({ path }, index) => (
               <div
                 key={index}
@@ -66,22 +103,10 @@ function CarouselHeader() {
                   width={1920}
                   height={600}
                   alt="Banner"
-                  className="h-full w-full max-w-[600px] rounded-lg object-contain"
+                  className="h-full w-full max-w-[600px] rounded-lg object-cover"
                 />
               </div>
             ))
-          ) : (
-            <div
-              className={`flex h-16 w-28 cursor-pointer rounded-md border-2 border-lootlab-font-base shadow-custom shadow-lootlab-font-highlight transition-transform duration-200 ease-in-out hover:border-2`}
-            >
-              <Image
-                src={loot}
-                width={1920}
-                height={600}
-                alt="Banner"
-                className="h-full w-full rounded-lg object-contain"
-              />
-            </div>
           )}
         </div>
       </div>
