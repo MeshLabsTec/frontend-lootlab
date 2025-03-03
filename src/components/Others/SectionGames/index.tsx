@@ -1,8 +1,8 @@
 "use client";
 import PostService from "@/services/post.service";
 import { useQuery } from "@tanstack/react-query";
-import { IoGameControllerOutline } from "react-icons/io5";
 import SectionLine from "../SectionLine";
+import { FaGamepad } from "react-icons/fa";
 
 export default function SectionGames() {
   const { data: postsGames, isLoading } = useQuery({
@@ -13,7 +13,7 @@ export default function SectionGames() {
   return (
     <SectionLine
       href="nft-jogos"
-      iconTitle={<IoGameControllerOutline />}
+      iconTitle={<FaGamepad />}
       isLoading={isLoading}
       posts={postsGames}
       title="NFT Games"

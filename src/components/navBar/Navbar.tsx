@@ -9,7 +9,9 @@ export function NavBar() {
         <h1 className="mr-6 font-russo-one text-2xl">Lootlab</h1>
       </Link>
       <LinksAndLogin className="hidden" />
-      <DialogNavBar />
+      <div className="md:hidden">
+        <DialogNavBar />
+      </div>
     </nav>
   );
 }
