@@ -11,6 +11,7 @@ export function transformPostToSchema(post: IPost): FormDataToUpdate {
     score: post.score ?? null,
     investment: String(post.investment || ""),
     network: post.network || "",
+    network_secondary: post.network_secondary || [],
     token: post.token || "",
     commentAuthor: post.commentAuthor || "",
     images: [post.images[0]],
@@ -30,6 +31,8 @@ export function transformPostToSchema(post: IPost): FormDataToUpdate {
       publicSale: post.launchInfo.publicSale || 0,
     },
     genres: post.genres.map((genre) => ({ name: genre })),
+    status: post.status || "",
+    platform: post.platform || [],
     partnerships: post.partnerships.map((partner) => ({
       type: partner.type || "",
       link_url: partner.link_url || "",

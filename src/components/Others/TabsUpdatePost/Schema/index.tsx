@@ -41,6 +41,7 @@ export const FormSchemaToUpdate = z.object({
     .optional(),
   investment: z.string().optional(),
   network: z.string().optional(),
+  network_secondary: z.array(z.string()).optional(),
   token: z.string().optional(),
   commentAuthor: z.string().optional(),
   file: z
@@ -75,6 +76,15 @@ export const FormSchemaToUpdate = z.object({
   partnerships: z.array(PartnershipSchema).default([]).optional(),
   postId: z.string(),
   oldImageUrl: z.string().optional(),
+  status: z
+    .enum(
+      ["DRAFT", "DEVELOPMENT", "LIVE", "ALPHA", "BETA", "PRESALE", "CANCELL"],
+      {
+        message: "O status é inválido",
+      },
+    )
+    .optional(),
+  platform: z.array(z.string()).optional(),
 });
 
 export type FormDataToUpdate = z.infer<typeof FormSchemaToUpdate>;
