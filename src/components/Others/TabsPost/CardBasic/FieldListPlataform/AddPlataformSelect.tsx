@@ -35,7 +35,7 @@ function AddPlataformSelect() {
   } = useFormContext<FormData>();
 
   const selectedPlatforms = watch("platform") || [];
-  console.log(selectedPlatforms);
+
   useEffect(() => {
     if (!selectedPlatforms || !Array.isArray(selectedPlatforms)) {
       setValue("platform", []);
