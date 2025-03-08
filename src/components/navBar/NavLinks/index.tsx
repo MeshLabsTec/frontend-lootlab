@@ -2,7 +2,8 @@ import classNames from "classnames";
 import NavLink from "./NavLink";
 import Link from "next/link";
 // Importando ícones do React Icons (pacote FaIcons - Font Awesome)
-import { FaHome, FaGamepad, FaPaintBrush, FaCoins } from "react-icons/fa";
+import { FaHome, FaGamepad, FaPaintBrush } from "react-icons/fa";
+import { GoContainer } from "react-icons/go";
 
 interface IProps {
   orientation?: "horizontal" | "vertical";
@@ -39,8 +40,8 @@ function NavLinks({ orientation = "horizontal" }: IProps) {
 
       <NavLink href="/crypto">
         <div className="flex items-center gap-2">
-          <FaCoins className="text-lg" />
-          <span>Crypto</span>
+          <GoContainer className="text-lg" />
+          <span>AirDrop</span>
         </div>
       </NavLink>
     </ul>

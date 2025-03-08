@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PlusIcon, X } from "lucide-react";
+import { PlusIcon, X, Hexagon } from "lucide-react";
 import type { FormData } from "../../schemas";
 import { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
@@ -18,6 +18,7 @@ import { getCoinIcons } from "./getCoinIcons";
 // Definir os tipos de rede disponíveis
 const networkTypes = [
   "BTC",
+  "RON",
   "ETH",
   "SOL",
   "BNB",
@@ -27,7 +28,15 @@ const networkTypes = [
   "DOT",
   "ARB",
   "IMX",
+  "PoP",
 ];
+
+// Componente para ícone padrão quando não existir um ícone específico
+const DefaultNetworkIcon = () => (
+  <div className="flex h-5 w-5 items-center justify-center rounded-full bg-blue-900/40">
+    <Hexagon className="h-3 w-3 text-blue-300" />
+  </div>
+);
 
 function AddOtherNetworkSelect() {
   const [selectedNetwork, setSelectedNetwork] = useState<string>("");
@@ -124,12 +133,14 @@ function AddOtherNetworkSelect() {
                         className="my-1 cursor-pointer rounded-md text-gray-200 hover:bg-blue-900/40 hover:text-blue-300 focus:bg-blue-900/40 focus:text-blue-300"
                       >
                         <div className="flex items-center gap-2">
-                          {coinIcons[field] && (
+                          {coinIcons[field] ? (
                             <img
                               src={coinIcons[field]}
                               alt={field}
                               className="h-5 w-5 rounded-full"
                             />
+                          ) : (
+                            <DefaultNetworkIcon />
                           )}
                           {field}
                         </div>
@@ -153,12 +164,14 @@ function AddOtherNetworkSelect() {
           {otherNetworks.map((field, index) => (
             <div key={index} className="flex items-start justify-between gap-2">
               <div className="flex h-fit w-fit items-center gap-2 rounded-full border-[1px] border-lootlab-font-highlight px-4">
-                {coinIcons[field] && (
+                {coinIcons[field] ? (
                   <img
                     src={coinIcons[field]}
                     alt={field}
                     className="h-4 w-4 rounded-full"
                   />
+                ) : (
+                  <DefaultNetworkIcon />
                 )}
                 {field}
                 <Button
