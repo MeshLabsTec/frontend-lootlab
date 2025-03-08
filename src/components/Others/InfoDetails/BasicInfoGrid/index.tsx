@@ -2,17 +2,75 @@
 
 import BasicInfo from "../BasicInfo";
 import usePostStore from "@/stores/post.store";
+import { Monitor, Smartphone, Gamepad2, Globe } from "lucide-react";
+import Tooltip from "@/components/Others/Tooltip";
+
+// Componente para exibir ícones de plataforma com tooltips
+const PlatformIcons = ({ platforms }: { platforms: string[] }) => {
+  // Função para obter o ícone correspondente à plataforma
+  const getPlatformIcon = (platform: string) => {
+    switch (platform) {
+      case "PC":
+        return <Monitor className="h-6 w-6" />;
+      case "Mobile":
+        return <Smartphone className="h-6 w-6" />;
+      case "Console":
+        return <Gamepad2 className="h-6 w-6" />;
+      case "Web":
+        return <Globe className="h-6 w-6" />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="mt-2 flex flex-wrap gap-3">
+      {platforms.map((platform, index) => (
+        <Tooltip key={index} title={platform}>
+          <div className="cursor-pointer text-white">
+            {getPlatformIcon(platform)}
+          </div>
+        </Tooltip>
+      ))}
+    </div>
+  );
+};
 
 export default function BasicInfoGrid() {
   const { post } = usePostStore();
+
   return (
     <div className="row-span-2 flex h-full flex-col justify-center gap-6 md:col-span-1">
       <BasicInfo info={post?.title || ""} title="TITLE" />
       <BasicInfo info={post?.author.name || ""} title="AUTHOR" />
       <div className="grid grid-cols-2 gap-6">
         <BasicInfo title="SCORE" info={String(post?.score || "") || "0"} />
-        <BasicInfo title="NETWORK" info={post?.network || "N/I"} />
+        <BasicInfo
+          title="NETWORK"
+          info={[
+            post?.network || "",
+            ...(post?.network_secondary || []),
+          ].filter(Boolean)}
+          showAsIcon={true}
+        />
         <BasicInfo title="INVESTMENT" info={post?.investment || "N/I"} />
+        {post?.status !== "DRAFT" && (
+          <BasicInfo
+            title="STATUS"
+            info={post?.status || "N/I"}
+            truncate={true}
+          />
+        )}
+        {post?.platform && post?.platform.length > 0 && (
+          <div className="flex flex-col rounded-lg border border-[#1c2f4a] bg-[#132238] p-6">
+            <h2 className="text-sm font-medium uppercase tracking-wider text-white/70">
+              PLATFORMS
+            </h2>
+            <div className="mt-2">
+              <PlatformIcons platforms={post.platform} />
+            </div>
+          </div>
+        )}
         {post?.category === "NFT Jogos" && (
           <BasicInfo title="TOKEN" info={post?.token || "N/I"} />
         )}

@@ -11,6 +11,7 @@ import { AccordionContent } from "@/components/ui/accordion";
 import FieldListGenres from "./FieldListGenres";
 import FinancialDateLaunch from "./FinancialDateLaunch";
 import CategoryRadio from "./CategoryRadio";
+import AddPlataformSelect from "./FieldListPlataform/AddPlataformSelect";
 // import { useEffect } from "react";
 
 const basicInfos: IInfosCard<FormData>[] = [
@@ -53,6 +54,8 @@ function BasicContent() {
           <Form.ErrorMessage error={errors?.[pathRegister]?.message} />
         </Form.Label>
       ))}
+
+      <AddPlataformSelect />
 
       <Form.Label title="Imagem" htmlFor="file">
         <Form.Input.FormInputImage

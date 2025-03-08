@@ -17,7 +17,7 @@ function AccordionManager({ children, error, titleTrigger }: IProps) {
       <AccordionItem
         value="link"
         className={classNames(
-          "max-h-96 overflow-y-auto rounded-lg border border-lootlab-font-highlight",
+          "max-h-96 overflow-hidden overflow-y-auto rounded-lg border border-lootlab-font-highlight",
           {
             "border-red-500": error,
           },

@@ -17,7 +17,7 @@ export default function CardPost({ post, className }: CardPostProps) {
   const hasMoreGenres = remainingGenres.length > 0;
 
   return (
-    <div className={cn("embla__slide mt-6 flex-[0_0_auto]", className)}>
+    <div className={cn("embla__slide mt-8 flex-[0_0_auto]", className)}>
       <Link
         href={`/details/${post.slug}`}
         className="group relative flex h-[360px] w-[250px] flex-col overflow-hidden rounded-xl bg-slate-800/40 transition-all duration-500 ease-out hover:bg-slate-700/40 md:hover:-translate-y-2"

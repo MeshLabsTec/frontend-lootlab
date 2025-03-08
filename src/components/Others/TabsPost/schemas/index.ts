@@ -18,6 +18,8 @@ const LaunchInfoSchema = z.object({
   publicSale: z.coerce.number().optional(),
 });
 
+const OtherNetworkSchema = z.array(z.string());
+
 const PartnershipSchema = z.object({
   type: z.string().optional(),
   link_url: z.string().url("URL da parceria inválida").optional(),
@@ -34,6 +36,7 @@ export const FormSchema = z.object({
     .optional(),
   investment: z.string().optional(),
   network: z.string().optional(),
+  network_secondary: OtherNetworkSchema.optional(),
   token: z.string().optional(),
   commentAuthor: z.string().min(1, "O comentário do autor é obrigatório"),
   file: z
@@ -57,7 +60,6 @@ export const FormSchema = z.object({
     ),
   marketLink: z.string().url("URL de mercado inválida").optional(),
   authorId: z.string().optional(),
-
   // Arrays e objetos opcionais
   genres: z
     .array(
@@ -70,6 +72,13 @@ export const FormSchema = z.object({
   projectFeatures: z.array(ProjectFeatureSchema).optional(),
   launchInfo: LaunchInfoSchema.optional(),
   partnerships: z.array(PartnershipSchema).optional(),
+  platform: z.array(z.string()).optional(),
+  status: z.enum(
+    ["DRAFT", "DEVELOPMENT", "LIVE", "ALPHA", "BETA", "PRESALE", "CANCELL"],
+    {
+      message: "O status é inválido",
+    },
+  ),
 });
 
 export type FormData = z.infer<typeof FormSchema>;

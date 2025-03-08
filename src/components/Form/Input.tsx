@@ -5,7 +5,7 @@ import { Input as InputUi } from "../ui/input";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
-  register: any;
+  register?: any;
   error?: string;
 }
 

@@ -100,6 +100,16 @@ export interface IPost {
   createdAt: string;
   updatedAt: string;
   authorId: string;
+  network_secondary: string[];
+  platform: string[];
+  status:
+    | "DRAFT"
+    | "DEVELOPMENT"
+    | "LIVE"
+    | "ALPHA"
+    | "BETA"
+    | "PRESALE"
+    | "CANCELL";
   links: ILink[];
   projectFeatures: IProjectFeature[];
   launchInfo: ILaunchInfo;
