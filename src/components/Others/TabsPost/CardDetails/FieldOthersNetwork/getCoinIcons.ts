@@ -1,10 +1,8 @@
-// Tipo para representar a origem da imagem (URL externa ou caminho local)
 type IconSource = {
   url: string;
   isLocal?: boolean;
 };
 
-// Objeto com os ícones estáticos
 export const staticIconUrls: Record<string, IconSource> = {
   BTC: { url: "https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png" },
   ETH: {
@@ -70,10 +68,7 @@ export const staticIconUrls: Record<string, IconSource> = {
   },
 };
 
-// Função para obter o caminho base da aplicação
 function getBasePath(): string {
-  // Se estiver em ambiente de produção, pode ser necessário ajustar este valor
-  // de acordo com a configuração do seu projeto
   return process.env.NEXT_PUBLIC_BASE_PATH || "";
 }
 
@@ -82,7 +77,6 @@ export async function getCoinIcons() {
     const processedIcons: Record<string, string> = {};
 
     for (const [symbol, source] of Object.entries(staticIconUrls)) {
-      // Não é necessário adicionar nada ao caminho, pois a pasta public já é a raiz
       processedIcons[symbol] = source.url;
     }
 
@@ -100,10 +94,9 @@ export async function getCoinIcons() {
   }
 }
 
-// Função auxiliar para verificar se uma imagem existe
 export function getIconUrl(symbol: string): string {
   const source = staticIconUrls[symbol];
-  if (!source) return ""; // Retorna string vazia se o símbolo não existir
+  if (!source) return "";
 
   if (source.isLocal) {
     return `${getBasePath()}${source.url}`;
