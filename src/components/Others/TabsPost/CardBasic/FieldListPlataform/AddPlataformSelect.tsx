@@ -1,5 +1,15 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import {
+  FaSteam,
+  FaWindows,
+  FaPlaystation,
+  FaApple,
+  FaXbox,
+} from "react-icons/fa";
+import { IoLogoAndroid } from "react-icons/io";
+import { SiEpicgames } from "react-icons/si";
+import { BsNintendoSwitch } from "react-icons/bs";
 import { X, Monitor, Smartphone, Gamepad2, Globe } from "lucide-react";
 import type { FormData } from "../../schemas";
 import { useEffect } from "react";
@@ -9,7 +19,20 @@ import AccordionManager from "../../AccordionManager";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 
-const platformOptions = ["PC", "Mobile", "Console", "Web"];
+const platformOptions = [
+  "PC",
+  "Mobile",
+  "Console",
+  "Web",
+  "Windows",
+  "Steam",
+  "Epic Games",
+  "Android",
+  "iOS",
+  "PlayStation",
+  "Xbox",
+  "Nintendo",
+];
 
 // Função para obter o ícone correspondente à plataforma
 const getPlatformIcon = (platform: string) => {
@@ -22,6 +45,22 @@ const getPlatformIcon = (platform: string) => {
       return <Gamepad2 className="mr-1 h-4 w-4" />;
     case "Web":
       return <Globe className="mr-1 h-4 w-4" />;
+    case "Windows":
+      return <FaWindows className="mr-1 h-4 w-4" />;
+    case "Steam":
+      return <FaSteam className="mr-1 h-4 w-4" />;
+    case "Epic Games":
+      return <SiEpicgames className="mr-1 h-4 w-4" />;
+    case "Android":
+      return <IoLogoAndroid className="mr-1 h-4 w-4" />;
+    case "iOS":
+      return <FaApple className="mr-1 h-4 w-4" />;
+    case "PlayStation":
+      return <FaPlaystation className="mr-1 h-4 w-4" />;
+    case "Xbox":
+      return <FaXbox className="mr-1 h-4 w-4" />;
+    case "Nintendo":
+      return <BsNintendoSwitch className="mr-1 h-4 w-4" />;
     default:
       return null;
   }

@@ -32,7 +32,11 @@ const statusOptions = [
   { value: "CANCELL", label: "Cancell" },
 ];
 
-function DeatilsContent() {
+interface IDeatilsContent {
+  action: "Publicar" | "Salvar";
+}
+
+function DeatilsContent({ action }: IDeatilsContent) {
   const {
     register,
     setValue,
@@ -94,6 +98,20 @@ function DeatilsContent() {
           </Select>
         </Form.Label>
       </div>
+
+      {action === "Salvar" && (
+        <div>
+          <Form.Label title="Rede" htmlFor="Rede">
+            <Form.Input.FormInputGeneric
+              type="text"
+              id="Rede"
+              register={register("network")}
+              error={errors.network?.message}
+            />
+          </Form.Label>
+          <Form.ErrorMessage error={errors.network?.message} />
+        </div>
+      )}
 
       <AddOtherNetworkSelect />
 
