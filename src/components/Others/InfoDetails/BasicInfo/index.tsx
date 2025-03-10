@@ -20,7 +20,7 @@ const cardVariants = cva(
 
 interface IProps extends VariantProps<typeof cardVariants> {
   title: string;
-  info: string | number | string[] | undefined;
+  info: any;
   showAsIcon?: boolean;
   truncate?: boolean;
 }
@@ -75,7 +75,12 @@ export default function BasicInfo({
     ) {
       return (
         <div className="group relative mt-2 cursor-pointer">
-          <Image src={staticIconUrls[info]} alt={info} width={24} height={24} />
+          <Image
+            src={staticIconUrls[info.toLocaleLowerCase()]}
+            alt={info}
+            width={24}
+            height={24}
+          />
           <div className="pointer-events-none absolute left-1/2 top-full z-10 mt-1 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             {info}
           </div>
