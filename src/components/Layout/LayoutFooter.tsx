@@ -35,7 +35,7 @@ export function LayoutFooter() {
               <FaTwitter />
             </a>
             <a
-              href="https://discord.gg/2UfBvkVB"
+              href="https://discord.gg/7S3SDb2KEk"
               target="_blank"
               className="flex h-10 w-10 items-center justify-center rounded-full text-lg transition-colors hover:text-lootlab-font-base"
               rel="noopener noreferrer"

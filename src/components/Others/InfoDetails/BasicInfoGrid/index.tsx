@@ -47,10 +47,19 @@ export default function BasicInfoGrid() {
         <BasicInfo title="SCORE" info={String(post?.score || "") || "0"} />
         <BasicInfo
           title="NETWORK"
-          info={[
-            post?.network || "",
-            ...(post?.network_secondary || []),
-          ].filter(Boolean)}
+          info={(() => {
+            const network = post?.network || "";
+            const networkSecondary = post?.network_secondary || [];
+
+            if (
+              !network &&
+              (!networkSecondary || networkSecondary.length === 0)
+            ) {
+              return ["TBA"];
+            }
+
+            return [network, ...networkSecondary].filter(Boolean);
+          })()}
           showAsIcon={true}
         />
         <BasicInfo title="INVESTMENT" info={post?.investment || "N/I"} />

@@ -18,7 +18,7 @@ import { getCoinIcons } from "./getCoinIcons";
 // Definir os tipos de rede disponíveis
 const networkTypes = [
   "BTC",
-  "RON",
+  "RONIN",
   "ETH",
   "SOL",
   "BNB",
@@ -55,19 +55,6 @@ function AddOtherNetworkSelect() {
       setValue("network_secondary", []);
     }
   }, [setValue]);
-
-  // Verifica se estamos em modo de edição observando se já existem redes secundárias no formulário
-  useEffect(() => {
-    // Se otherNetworks já contém dados, significa que estamos em modo de edição
-    // e os dados já foram carregados pelo transformPostToSchema
-    if (
-      otherNetworks &&
-      Array.isArray(otherNetworks) &&
-      otherNetworks.length > 0
-    ) {
-      // As redes já estão carregadas no formulário
-    }
-  }, [otherNetworks]);
 
   const handleAddOtherNetwork = () => {
     if (selectedNetwork && !otherNetworks.includes(selectedNetwork)) {
