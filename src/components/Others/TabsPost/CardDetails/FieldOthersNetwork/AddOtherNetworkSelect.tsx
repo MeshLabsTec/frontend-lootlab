@@ -18,7 +18,7 @@ import { getCoinIcons } from "./getCoinIcons";
 // Definir os tipos de rede disponíveis
 const networkTypes = [
   "BTC",
-  "RONIN",
+  "RON",
   "ETH",
   "SOL",
   "BNB",
@@ -29,6 +29,15 @@ const networkTypes = [
   "ARB",
   "IMX",
   "PoP",
+  "TREASURE",
+  "WAX",
+  "TRX",
+  "ENJ",
+  "TON",
+  "APT",
+  "WEMIX",
+  "XAYA",
+  "MARBLEX",
 ];
 
 // Componente para ícone padrão quando não existir um ícone específico

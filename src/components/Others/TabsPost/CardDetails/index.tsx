@@ -24,7 +24,7 @@ function DetailsCard({
           Detalhes essenciais sobre o jogo.
         </CardDescription>
       </CardHeader>
-      <DeatilsContent />
+      <DeatilsContent action={action} />
       <CardFooter className="flex w-full justify-between">
         <ButtonPrevTab />
         <PublicButton disabled={status} title={action} />

@@ -2,6 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 import { staticIconUrls } from "@/components/Others/TabsPost/CardDetails/FieldOthersNetwork/getCoinIcons";
 import Tooltip from "@/components/Others/Tooltip";
+import { useMemo } from "react";
 
 const cardVariants = cva(
   "rounded-lg border border-[#1c2f4a] bg-[#132238] p-6 flex flex-col",
@@ -32,30 +33,93 @@ export default function BasicInfo({
   showAsIcon = false,
   truncate = false,
 }: IProps) {
-  const renderContent = () => {
+  const iconExists = (str: string): boolean => {
+    if (!staticIconUrls) return false;
+    if (!str) return false;
+
+    if (str.toUpperCase() in staticIconUrls) return true;
+
+    return Object.keys(staticIconUrls).some(
+      (key) =>
+        key.includes(str.toUpperCase()) || str.toUpperCase().includes(key),
+    );
+  };
+
+  const getIconUrl = (str: string): string | null => {
+    if (!staticIconUrls || !str) return null;
+
+    if (str.toUpperCase() in staticIconUrls) {
+      const iconSource = staticIconUrls[str.toUpperCase()];
+      return typeof iconSource === "object" && "url" in iconSource
+        ? iconSource.url
+        : (iconSource as string);
+    }
+
+    const matchingKey = Object.keys(staticIconUrls).find(
+      (key) =>
+        key.includes(str.toUpperCase()) || str.toUpperCase().includes(key),
+    );
+
+    if (!matchingKey) return null;
+
+    const iconSource = staticIconUrls[matchingKey];
+    return typeof iconSource === "object" && "url" in iconSource
+      ? iconSource.url
+      : (iconSource as string);
+  };
+
+  const getUniqueIcons = (items: any[]): any[] => {
+    if (!Array.isArray(items)) return items;
+
+    const uniqueItems: any[] = [];
+    const iconUrls = new Set<string>();
+
+    items.forEach((item) => {
+      if (typeof item === "string" && iconExists(item)) {
+        const iconUrl = getIconUrl(item);
+
+        if (iconUrl && !iconUrls.has(iconUrl)) {
+          iconUrls.add(iconUrl);
+          uniqueItems.push(item);
+        }
+      } else {
+        uniqueItems.push(item);
+      }
+    });
+
+    return uniqueItems;
+  };
+
+  const uniqueInfo = useMemo(() => {
     if (showAsIcon && Array.isArray(info)) {
+      return getUniqueIcons(info);
+    }
+    return info;
+  }, [info, showAsIcon]);
+
+  const renderContent = () => {
+    if (showAsIcon && Array.isArray(uniqueInfo)) {
       return (
         <div className="mt-2 flex flex-wrap gap-2">
-          {info.map((item, index) => {
-            if (
-              typeof item === "string" &&
-              staticIconUrls &&
-              item in staticIconUrls
-            ) {
-              return (
-                <div key={index} className="group relative cursor-pointer">
-                  <Image
-                    src={staticIconUrls[item]}
-                    alt={item}
-                    width={24}
-                    height={24}
-                    className="inline-block"
-                  />
-                  <div className="pointer-events-none absolute left-1/2 top-full z-10 mt-1 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    {item}
+          {uniqueInfo.map((item, index) => {
+            if (typeof item === "string" && iconExists(item)) {
+              const iconUrl = getIconUrl(item);
+              if (iconUrl) {
+                return (
+                  <div key={index} className="group relative cursor-pointer">
+                    <Image
+                      src={iconUrl}
+                      alt={item}
+                      width={24}
+                      height={24}
+                      className="inline-block"
+                    />
+                    <div className="pointer-events-none absolute left-1/2 top-full z-10 mt-1 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                      {item.toUpperCase()}
+                    </div>
                   </div>
-                </div>
-              );
+                );
+              }
             }
             return (
               <span key={index} className="text-xl font-semibold text-white">
@@ -69,30 +133,30 @@ export default function BasicInfo({
 
     if (
       showAsIcon &&
-      typeof info === "string" &&
-      staticIconUrls &&
-      info in staticIconUrls
+      typeof uniqueInfo === "string" &&
+      iconExists(uniqueInfo)
     ) {
-      return (
-        <div className="group relative mt-2 cursor-pointer">
-          <Image
-            src={staticIconUrls[info.toLocaleLowerCase()]}
-            alt={info}
-            width={24}
-            height={24}
-          />
-          <div className="pointer-events-none absolute left-1/2 top-full z-10 mt-1 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            {info}
+      const iconUrl = getIconUrl(uniqueInfo);
+      if (iconUrl) {
+        return (
+          <div className="group relative mt-2 cursor-pointer">
+            <Image src={iconUrl} alt={uniqueInfo} width={24} height={24} />
+            <div className="pointer-events-none absolute left-1/2 top-full z-10 mt-1 -translate-x-1/2 transform whitespace-nowrap rounded bg-gray-900 px-2 py-1 text-xs text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+              {uniqueInfo}
+            </div>
           </div>
-        </div>
-      );
+        );
+      }
     }
 
-    if (truncate && (typeof info === "string" || typeof info === "number")) {
+    if (
+      truncate &&
+      (typeof uniqueInfo === "string" || typeof uniqueInfo === "number")
+    ) {
       return (
-        <Tooltip title={String(info)}>
+        <Tooltip title={String(uniqueInfo.toString().toUpperCase())}>
           <div className="mt-2 cursor-pointer overflow-hidden truncate text-3xl font-semibold capitalize text-white">
-            {info}
+            {uniqueInfo.toString().toUpperCase()}
           </div>
         </Tooltip>
       );
@@ -100,7 +164,7 @@ export default function BasicInfo({
 
     return (
       <div className="mt-2 text-3xl font-semibold capitalize text-white">
-        {info}
+        {uniqueInfo}
       </div>
     );
   };
