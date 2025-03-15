@@ -102,6 +102,7 @@ export interface IPost {
   authorId: string;
   network_secondary: string[];
   platform: string[];
+  airDrop: boolean;
   status:
     | "DRAFT"
     | "DEVELOPMENT"

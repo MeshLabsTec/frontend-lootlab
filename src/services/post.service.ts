@@ -20,6 +20,15 @@ export default class PostService {
     }
   }
 
+  public static async getPostsAll() {
+    try {
+      const response = await Api.get<IPost[]>(`/post`);
+      return response.data;
+    } catch (error) {
+      throw new Error("Erro ao buscar os posts.");
+    }
+  }
+
   public static async getPostBySlug(slug: string) {
     try {
       const response = await Api.get<IPost>(`/post/slug/${slug}`);
