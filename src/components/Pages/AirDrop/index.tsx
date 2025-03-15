@@ -1,8 +1,8 @@
 "use client";
-import NFTHeaderFilter from "@/components/Others/NFTHeaderFilter";
 import NFTPostList from "@/components/Others/NFTPostList";
 import useGetNFTPosts from "@/hooks/useGetNFTPosts";
-import { GoContainer } from "react-icons/go";
+import airdrop from "../../../../public/airdrop.png";
+import Image from "next/image";
 
 export function AirDropComponent() {
   const { isLoading, posts: postsAll } = useGetNFTPosts("getPostsAll");
@@ -11,7 +11,10 @@ export function AirDropComponent() {
 
   return (
     <div className="flex h-full w-full flex-col items-start gap-4 px-[5%]">
-      <NFTHeaderFilter iconTitle={<GoContainer />} title="AirDrop" />
+      <div className="flex items-center gap-2">
+        <Image src={airdrop} alt="AirDrop" className="h-6 w-5" />
+        <h1 className="text-2xl font-bold text-white">AirDrop</h1>
+      </div>
       <NFTPostList isLoading={isLoading} posts={filterAirDrop} />
     </div>
   );
