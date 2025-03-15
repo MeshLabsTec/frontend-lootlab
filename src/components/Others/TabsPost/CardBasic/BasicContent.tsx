@@ -12,7 +12,8 @@ import FieldListGenres from "./FieldListGenres";
 import FinancialDateLaunch from "./FinancialDateLaunch";
 import CategoryRadio from "./CategoryRadio";
 import AddPlataformSelect from "./FieldListPlataform/AddPlataformSelect";
-// import { useEffect } from "react";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 const basicInfos: IInfosCard<FormData>[] = [
   { title: "Nome do Projeto", pathRegister: "title" },
@@ -23,7 +24,7 @@ function BasicContent() {
     register,
     formState: { errors },
     watch,
-    // setValue,
+    setValue,
     // getValues,
   } = useFormContext<FormData>();
 
@@ -79,6 +80,22 @@ function BasicContent() {
         />
         <Form.ErrorMessage error={errors.commentAuthor?.message} />
       </Form.Label>
+
+      <div className="flex flex-row items-center justify-between rounded-lg border p-4">
+        <div className="space-y-0.5">
+          <Label htmlFor="airDrop">AirDrop</Label>
+          <p className="text-sm text-muted-foreground">
+            Ative caso seu projeto tenha AirDrop disponível
+          </p>
+        </div>
+        <Switch
+          id="airDrop"
+          checked={watch("airDrop")}
+          onCheckedChange={(checked: boolean) => setValue("airDrop", checked)}
+          className="data-[state=checked]:bg-[#172944]"
+        />
+      </div>
+
       <CategoryRadio />
     </CardContent>
   );

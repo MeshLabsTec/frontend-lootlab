@@ -64,6 +64,7 @@ export const FormSchemaToUpdate = z.object({
     .optional(),
   links: z.array(LinkSchema).default([]).optional(),
   projectFeatures: z.array(ProjectFeatureSchema).optional(),
+  airDrop: z.boolean().optional(),
   launchInfo: LaunchInfoSchema.optional(),
   images: z.array(z.string()).optional(),
   genres: z

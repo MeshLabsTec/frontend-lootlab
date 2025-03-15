@@ -2,22 +2,47 @@
 
 import BasicInfo from "../BasicInfo";
 import usePostStore from "@/stores/post.store";
-import { Monitor, Smartphone, Gamepad2, Globe } from "lucide-react";
 import Tooltip from "@/components/Others/Tooltip";
+import {
+  FaSteam,
+  FaWindows,
+  FaPlaystation,
+  FaApple,
+  FaXbox,
+} from "react-icons/fa";
+import { IoLogoAndroid } from "react-icons/io";
+import { SiEpicgames } from "react-icons/si";
+import { BsNintendoSwitch } from "react-icons/bs";
+import { Monitor, Smartphone, Gamepad2, Globe } from "lucide-react";
 
 // Componente para exibir ícones de plataforma com tooltips
 const PlatformIcons = ({ platforms }: { platforms: string[] }) => {
-  // Função para obter o ícone correspondente à plataforma
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
       case "PC":
-        return <Monitor className="h-6 w-6" />;
+        return <Monitor className="mr-1 h-4 w-4" />;
       case "Mobile":
-        return <Smartphone className="h-6 w-6" />;
+        return <Smartphone className="mr-1 h-4 w-4" />;
       case "Console":
-        return <Gamepad2 className="h-6 w-6" />;
+        return <Gamepad2 className="mr-1 h-4 w-4" />;
       case "Web":
-        return <Globe className="h-6 w-6" />;
+        return <Globe className="mr-1 h-4 w-4" />;
+      case "Windows":
+        return <FaWindows className="mr-1 h-4 w-4" />;
+      case "Steam":
+        return <FaSteam className="mr-1 h-4 w-4" />;
+      case "Epic Games":
+        return <SiEpicgames className="mr-1 h-4 w-4" />;
+      case "Android":
+        return <IoLogoAndroid className="mr-1 h-4 w-4" />;
+      case "iOS":
+        return <FaApple className="mr-1 h-4 w-4" />;
+      case "PlayStation":
+        return <FaPlaystation className="mr-1 h-4 w-4" />;
+      case "Xbox":
+        return <FaXbox className="mr-1 h-4 w-4" />;
+      case "Nintendo":
+        return <BsNintendoSwitch className="mr-1 h-4 w-4" />;
       default:
         return null;
     }

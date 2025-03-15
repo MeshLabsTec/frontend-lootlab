@@ -3,7 +3,8 @@ import NavLink from "./NavLink";
 import Link from "next/link";
 // Importando ícones do React Icons (pacote FaIcons - Font Awesome)
 import { FaHome, FaGamepad, FaPaintBrush } from "react-icons/fa";
-import { GoContainer } from "react-icons/go";
+import airdrop from "../../../../public/airdrop.png";
+import Image from "next/image";
 
 interface IProps {
   orientation?: "horizontal" | "vertical";
@@ -38,9 +39,9 @@ function NavLinks({ orientation = "horizontal" }: IProps) {
         </div>
       </NavLink>
 
-      <NavLink href="/crypto">
+      <NavLink href="/airdrop">
         <div className="flex items-center gap-2">
-          <GoContainer className="text-lg" />
+          <Image src={airdrop} alt="Airdrop" className="h-4 w-3" />
           <span>AirDrop</span>
         </div>
       </NavLink>

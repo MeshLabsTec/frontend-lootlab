@@ -70,6 +70,7 @@ export const FormSchema = z.object({
     .optional(),
   links: z.array(LinkSchema).optional(),
   projectFeatures: z.array(ProjectFeatureSchema).optional(),
+  airDrop: z.boolean().optional(),
   launchInfo: LaunchInfoSchema.optional(),
   partnerships: z.array(PartnershipSchema).optional(),
   platform: z.array(z.string()).optional(),
