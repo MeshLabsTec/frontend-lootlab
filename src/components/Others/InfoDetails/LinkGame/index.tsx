@@ -22,7 +22,7 @@ interface IProps {
 const plataformChoice = {
   instagram: { icon: <FaInstagram />, label: "Instagram" },
   discord: { icon: <FaDiscord />, label: "Discord" },
-  telegram: { icon: <FaTelegram />, label: "Telagram" },
+  telegram: { icon: <FaTelegram />, label: "Telegram" },
   facebook: { icon: <FaSquareFacebook />, label: "Facebook" },
   reddit: { icon: <FaReddit />, label: "Reddit" },
   medium: { icon: <FaMedium />, label: "Medium" },
