@@ -2,7 +2,7 @@ import classNames from "classnames";
 import NavLink from "./NavLink";
 import Link from "next/link";
 // Importando ícones do React Icons (pacote FaIcons - Font Awesome)
-import { FaHome, FaGamepad, FaPaintBrush } from "react-icons/fa";
+import { FaHome, FaGamepad, FaPaintBrush, FaMedal } from "react-icons/fa";
 import airdrop from "../../../../public/airdrop.png";
 import Image from "next/image";
 
@@ -43,6 +43,13 @@ function NavLinks({ orientation = "horizontal" }: IProps) {
         <div className="flex items-center gap-2">
           <Image src={airdrop} alt="Airdrop" className="h-4 w-3" />
           <span>AirDrop</span>
+        </div>
+      </NavLink>
+
+      <NavLink href="/battle-pass">
+        <div className="flex items-center gap-2">
+          <FaMedal className="h-4 w-3" />
+          <span>Battle Pass</span>
         </div>
       </NavLink>
     </ul>
