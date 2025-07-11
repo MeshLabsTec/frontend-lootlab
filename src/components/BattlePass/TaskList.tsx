@@ -58,7 +58,7 @@ function MinimalTaskTabs({
           <button
             key={tab.key}
             onClick={() => onChange(tab.key)}
-            className={`font-orbitron relative px-4 py-2 text-base font-bold transition-colors duration-200 ${active ? "text-lootlab-color-highlight" : "text-slate-400"} hover:text-lootlab-color-highlight focus:outline-none`}
+            className={`relative px-4 py-2 font-orbitron text-base font-bold transition-colors duration-200 ${active ? "text-lootlab-color-highlight" : "text-slate-400"} hover:text-lootlab-color-highlight focus:outline-none`}
             style={{ minWidth: 100 }}
           >
             <span className="flex items-center gap-2">
@@ -101,7 +101,7 @@ export function TaskList({ userProgress, onClaimReward }: TaskListProps) {
   return (
     <div className="rounded-xl border border-[#1F2C47] bg-slate-800/40 p-6 backdrop-blur-sm">
       <div className="mb-6">
-        <h2 className="font-orbitron mb-2 text-2xl font-bold text-lootlab-font-base">
+        <h2 className="mb-2 font-orbitron text-2xl font-bold text-lootlab-font-base">
           Battle Pass Tasks
         </h2>
         <p className="font-orbitron text-lootlab-font-highlight">
@@ -131,7 +131,7 @@ export function TaskList({ userProgress, onClaimReward }: TaskListProps) {
             ))}
           </div>
           {daily.length === 0 && (
-            <div className="font-orbitron py-8 text-center text-lootlab-font-highlight">
+            <div className="py-8 text-center font-orbitron text-lootlab-font-highlight">
               No daily tasks available
             </div>
           )}
@@ -150,7 +150,7 @@ export function TaskList({ userProgress, onClaimReward }: TaskListProps) {
             ))}
           </div>
           {weekly.length === 0 && (
-            <div className="font-orbitron py-8 text-center text-lootlab-font-highlight">
+            <div className="py-8 text-center font-orbitron text-lootlab-font-highlight">
               No weekly tasks available
             </div>
           )}
@@ -169,7 +169,7 @@ export function TaskList({ userProgress, onClaimReward }: TaskListProps) {
             ))}
           </div>
           {unique.length === 0 && (
-            <div className="font-orbitron py-8 text-center text-lootlab-font-highlight">
+            <div className="py-8 text-center font-orbitron text-lootlab-font-highlight">
               No unique tasks available
             </div>
           )}
@@ -188,7 +188,7 @@ export function TaskList({ userProgress, onClaimReward }: TaskListProps) {
             ))}
           </div>
           {progressive.length === 0 && (
-            <div className="font-orbitron py-8 text-center text-lootlab-font-highlight">
+            <div className="py-8 text-center font-orbitron text-lootlab-font-highlight">
               No progressive tasks available
             </div>
           )}

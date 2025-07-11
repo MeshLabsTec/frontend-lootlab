@@ -39,10 +39,10 @@ export function BattlePassHighlight({
       </div>
       {/* Infos do prêmio */}
       <div className="w-full md:ml-2">
-        <div className="font-orbitron mb-2 text-2xl font-bold text-white">
+        <div className="mb-2 font-orbitron text-2xl font-bold text-white">
           {currentTierObj?.name}
         </div>
-        <div className="font-orbitron mb-2 text-sm font-semibold text-green-400">
+        <div className="mb-2 font-orbitron text-sm font-semibold text-green-400">
           <span className="text-sm font-semibold text-green-400">
             {currentTierObj?.type} •{" "}
             <span className="uppercase text-zinc-400">
@@ -50,10 +50,10 @@ export function BattlePassHighlight({
             </span>
           </span>
         </div>
-        <div className="font-orbitron mb-4 max-w-md text-base text-slate-300">
+        <div className="mb-4 max-w-md font-orbitron text-base text-slate-300">
           {currentTierObj?.description}
         </div>
-        <button className="font-orbitron rounded-lg bg-green-600 px-6 py-2 font-bold text-white shadow transition-all hover:bg-green-700">
+        <button className="rounded-lg bg-green-600 px-6 py-2 font-orbitron font-bold text-white shadow transition-all hover:bg-green-700">
           Claim now
         </button>
       </div>

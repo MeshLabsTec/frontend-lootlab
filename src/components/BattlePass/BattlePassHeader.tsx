@@ -37,7 +37,7 @@ export function BattlePassHeader({
                 </div>
               )}
             </div>
-            <p className="font-orbitron mb-4 text-lg text-lootlab-font-highlight">
+            <p className="mb-4 font-orbitron text-lg text-lootlab-font-highlight">
               {season.description}
             </p>
 

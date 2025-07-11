@@ -118,7 +118,7 @@ export const BattlePassCard: React.FC<BattlePassCardProps> = ({
       {isUnlocked && !isClaimed && (
         <button
           className={cn(
-            "font-orbitron absolute bottom-0 left-0 right-0 w-full translate-y-full rounded-b-2xl py-2 text-center text-sm font-semibold opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 focus:outline-none",
+            "absolute bottom-0 left-0 right-0 w-full translate-y-full rounded-b-2xl py-2 text-center font-orbitron text-sm font-semibold opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 focus:outline-none",
             buttonColor,
             buttonText,
           )}

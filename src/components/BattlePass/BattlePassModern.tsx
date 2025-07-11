@@ -202,7 +202,7 @@ export function BattlePassModern() {
           <div className="mb-6 flex items-center justify-center">
             <div className="flex w-full items-center gap-4">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-400 to-transparent"></div>
-              <h2 className="font-orbitron whitespace-nowrap text-sm text-white">
+              <h2 className="whitespace-nowrap font-orbitron text-sm text-white">
                 BATTLE PASS REWARDS{" "}
                 <span className="font-normal text-green-400">
                   {userProgress.currentTier} / {battlePassItems.length}

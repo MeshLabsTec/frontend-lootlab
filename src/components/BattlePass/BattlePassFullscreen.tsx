@@ -168,13 +168,13 @@ export function BattlePassFullscreen() {
                     : selectedReward?.rewards.premium?.rarity || "COMMON"}
                 </Badge>
 
-                <h2 className="font-orbitron mb-3 text-3xl font-bold text-lootlab-font-base">
+                <h2 className="mb-3 font-orbitron text-3xl font-bold text-lootlab-font-base">
                   {selectedRewardType === "free"
                     ? selectedReward?.rewards.free?.name || "Special Reward"
                     : selectedReward?.rewards.premium?.name || "Premium Reward"}
                 </h2>
 
-                <p className="font-orbitron mb-6 text-base text-lootlab-font-highlight">
+                <p className="mb-6 font-orbitron text-base text-lootlab-font-highlight">
                   {selectedRewardType === "free"
                     ? selectedReward?.rewards.free?.description ||
                       "An incredible Battle Pass reward"

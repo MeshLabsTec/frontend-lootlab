@@ -135,7 +135,7 @@ export function BattlePass() {
           <div className="mb-8 rounded-xl bg-gradient-to-r from-lootlab-color-highlight to-lootlab-hover-highlight p-6 text-white">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="font-orbitron mb-2 text-xl font-bold">
+                <h3 className="mb-2 font-orbitron text-xl font-bold">
                   🔥 Unlock Premium Battle Pass!
                 </h3>
                 <p className="font-orbitron text-white/80">
