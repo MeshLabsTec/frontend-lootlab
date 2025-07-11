@@ -1,3 +1,9 @@
+// Usar URLs de imagem em vez de importações diretas
+const box = "/assets/box.png";
+const box2 = "/assets/box2.png";
+const caixaPirata = "/assets/caixa-pirata.png";
+const xp = "/assets/xp.png";
+
 export interface BattlePassSeason {
   id: string;
   name: string;
@@ -53,6 +59,7 @@ export interface BattlePassTier {
       description: string;
       icon: string;
       rarity: "COMMON" | "RARE" | "EPIC" | "LEGENDARY";
+      image?: string;
     };
     premium?: {
       type: "XP" | "BADGE" | "TITLE" | "AVATAR" | "EMOTE" | "SKIN";
@@ -60,6 +67,7 @@ export interface BattlePassTier {
       description: string;
       icon: string;
       rarity: "COMMON" | "RARE" | "EPIC" | "LEGENDARY";
+      image?: string;
     };
   };
 }
@@ -260,6 +268,14 @@ export const mockBattlePassTiers: BattlePassTier[] = Array.from(
     const xpRequired = 1000;
     const xpTotal = tier * xpRequired;
 
+    // Associa imagens reais para alguns tiers de exemplo
+    let image: any;
+    if (tier === 2) image = box;
+    if (tier === 3) image = box;
+    if (tier === 4) image = box;
+    if (tier === 5) image = box;
+    if (tier === 6) image = box;
+
     return {
       tier,
       xpRequired,
@@ -282,6 +298,7 @@ export const mockBattlePassTiers: BattlePassTier[] = Array.from(
           icon: tier % 10 === 0 ? "🏆" : tier % 5 === 0 ? "👑" : "⚡",
           rarity:
             tier % 10 === 0 ? "LEGENDARY" : tier % 5 === 0 ? "EPIC" : "COMMON",
+          ...(image ? { image } : {}),
         },
         ...(tier % 3 === 0 && {
           premium: {
@@ -319,6 +336,7 @@ export const mockBattlePassTiers: BattlePassTier[] = Array.from(
                     : "🌟",
             rarity:
               tier % 20 === 0 ? "LEGENDARY" : tier % 10 === 0 ? "EPIC" : "RARE",
+            ...(image ? { image } : {}),
           },
         }),
       },
@@ -391,4 +409,277 @@ export const calculateRemainingTime = (endDate: string) => {
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
   return { days, hours, minutes };
+};
+
+// Array de objetos com dados reais dos itens do Battle Pass
+export const battlePassItems: Array<{
+  id: string;
+  tier: number;
+  name: string;
+  description: string;
+  type: "FREE" | "PREMIUM";
+  rarity: "COMMON" | "RARE" | "EPIC" | "LEGENDARY";
+  image: string;
+  icon: string;
+  xpReward?: number;
+  category: string;
+}> = [
+  {
+    id: "tier-1",
+    tier: 1,
+    name: "LET ME IN!",
+    description: "Caixa misteriosa com recompensas aleatórias",
+    type: "FREE",
+    rarity: "COMMON",
+    image: box,
+    icon: "📦",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-2",
+    tier: 2,
+    name: "Rare Mystery Box",
+    description: "Caixa rara com melhores chances de itens especiais",
+    type: "FREE",
+    rarity: "RARE",
+    image: box2,
+    icon: "🎁",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-3",
+    tier: 3,
+    name: "Follow The Map",
+    description: "Baú pirata com tesouros lendários",
+    type: "PREMIUM",
+    rarity: "EPIC",
+    image: caixaPirata,
+    icon: "🏴‍☠️",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-4",
+    tier: 4,
+    name: "XP Boost Pack",
+    description: "Pacote de boost de experiência",
+    type: "FREE",
+    rarity: "COMMON",
+    image: xp,
+    icon: "⚡",
+    xpReward: 500,
+    category: "250 XP POINTS",
+  },
+  {
+    id: "tier-5",
+    tier: 5,
+    name: "Legendary Mystery Box",
+    description: "Caixa lendária com itens exclusivos",
+    type: "PREMIUM",
+    rarity: "LEGENDARY",
+    image: box,
+    icon: "💎",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-6",
+    tier: 6,
+    name: "Rare XP Pack",
+    description: "Pacote raro de experiência",
+    type: "FREE",
+    rarity: "RARE",
+    image: xp,
+    icon: "🌟",
+    xpReward: 1000,
+    category: "1000 XP POINTS",
+  },
+  {
+    id: "tier-7",
+    tier: 7,
+    name: "Epic Mystery Box",
+    description: "Caixa épica com recompensas valiosas",
+    type: "PREMIUM",
+    rarity: "EPIC",
+    image: box2,
+    icon: "🔥",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-8",
+    tier: 8,
+    name: "Common Mystery Box",
+    description: "Caixa comum com recompensas básicas",
+    type: "FREE",
+    rarity: "COMMON",
+    image: box,
+    icon: "📦",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-9",
+    tier: 9,
+    name: "Rare Pirate Chest",
+    description: "Baú pirata raro com tesouros especiais",
+    type: "PREMIUM",
+    rarity: "RARE",
+    image: caixaPirata,
+    icon: "⚓",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-10",
+    tier: 10,
+    name: "Legendary XP Pack",
+    description: "Pacote lendário de experiência máxima",
+    type: "FREE",
+    rarity: "LEGENDARY",
+    image: xp,
+    icon: "👑",
+    xpReward: 2000,
+    category: "2000 XP POINTS",
+  },
+  {
+    id: "tier-11",
+    tier: 11,
+    name: "Epic XP Boost",
+    description: "Boost épico de experiência",
+    type: "PREMIUM",
+    rarity: "EPIC",
+    image: xp,
+    icon: "🚀",
+    xpReward: 1500,
+    category: "1500 XP POINTS",
+  },
+  {
+    id: "tier-12",
+    tier: 12,
+    name: "Mystery Box Deluxe",
+    description: "Caixa misteriosa deluxe com recompensas premium",
+    type: "FREE",
+    rarity: "RARE",
+    image: box2,
+    icon: "💫",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-13",
+    tier: 13,
+    name: "Legendary Pirate Chest",
+    description: "Baú pirata lendário com tesouros míticos",
+    type: "PREMIUM",
+    rarity: "LEGENDARY",
+    image: caixaPirata,
+    icon: "🗡️",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-14",
+    tier: 14,
+    name: "Common XP Pack",
+    description: "Pacote comum de experiência",
+    type: "FREE",
+    rarity: "COMMON",
+    image: xp,
+    icon: "📚",
+    xpReward: 250,
+    category: "250 XP POINTS",
+  },
+  {
+    id: "tier-15",
+    tier: 15,
+    name: "Epic Mystery Box",
+    description: "Caixa épica com itens valiosos",
+    type: "PREMIUM",
+    rarity: "EPIC",
+    image: box,
+    icon: "💎",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-16",
+    tier: 16,
+    name: "Rare Mystery Box",
+    description: "Caixa rara com recompensas especiais",
+    type: "FREE",
+    rarity: "RARE",
+    image: box2,
+    icon: "🎁",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-17",
+    tier: 17,
+    name: "Legendary XP Boost",
+    description: "Boost lendário de experiência máxima",
+    type: "PREMIUM",
+    rarity: "LEGENDARY",
+    image: xp,
+    icon: "👑",
+    xpReward: 3000,
+    category: "1500 XP POINTS",
+  },
+  {
+    id: "tier-18",
+    tier: 18,
+    name: "Common Mystery Box",
+    description: "Caixa comum com recompensas básicas",
+    type: "FREE",
+    rarity: "COMMON",
+    image: box,
+    icon: "📦",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-19",
+    tier: 19,
+    name: "Rare Pirate Chest",
+    description: "Baú pirata raro com tesouros especiais",
+    type: "PREMIUM",
+    rarity: "RARE",
+    image: caixaPirata,
+    icon: "⚓",
+    category: "Mystery Box",
+  },
+  {
+    id: "tier-20",
+    tier: 20,
+    name: "Epic XP Pack",
+    description: "Pacote épico de experiência",
+    type: "FREE",
+    rarity: "EPIC",
+    image: xp,
+    icon: "🔥",
+    xpReward: 1750,
+    category: "1750 XP POINTS",
+  },
+];
+
+// Funções utilitárias para trabalhar com battlePassItems
+export const getItemByTier = (tier: number) => {
+  return battlePassItems.find((item) => item.tier === tier);
+};
+
+export const getFreeItems = () => {
+  return battlePassItems.filter((item) => item.type === "FREE");
+};
+
+export const getPremiumItems = () => {
+  return battlePassItems.filter((item) => item.type === "PREMIUM");
+};
+
+export const getItemsByRarity = (
+  rarity: "COMMON" | "RARE" | "EPIC" | "LEGENDARY",
+) => {
+  return battlePassItems.filter((item) => item.rarity === rarity);
+};
+
+export const getItemsByCategory = (category: string) => {
+  return battlePassItems.filter((item) => item.category === category);
+};
+
+export const getTotalItems = () => {
+  return battlePassItems.length;
+};
+
+export const getMaxTier = () => {
+  return Math.max(...battlePassItems.map((item) => item.tier));
 };

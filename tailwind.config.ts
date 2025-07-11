@@ -79,6 +79,7 @@ const config: Config = {
         "russo-one": ["Russo One", "sans-serif"],
         raleway: ["Raleway", "sans-serif"],
         segoe: ['"Segoe UI"', "sans-serif"],
+        orbitron: ["Orbitron", "monospace"],
       },
       keyframes: {
         "accordion-down": {

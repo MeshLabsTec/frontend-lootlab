@@ -88,10 +88,10 @@ export function BattlePassFullscreen() {
         <div className="flex items-center gap-4">
           <Trophy className="h-8 w-8 text-lootlab-color-highlight" />
           <div>
-            <h1 className="font-russo-one text-2xl font-bold text-lootlab-font-base">
+            <h1 className="font-orbitron text-2xl text-lootlab-font-base">
               {mockBattlePassSeason.name}
             </h1>
-            <p className="text-sm text-lootlab-font-highlight">
+            <p className="font-orbitron text-sm text-lootlab-font-highlight">
               SEASON 2 • ENDS IN {timeRemaining.days} DAYS
             </p>
           </div>
@@ -168,13 +168,13 @@ export function BattlePassFullscreen() {
                     : selectedReward?.rewards.premium?.rarity || "COMMON"}
                 </Badge>
 
-                <h2 className="mb-3 text-3xl font-bold text-lootlab-font-base">
+                <h2 className="font-orbitron mb-3 text-3xl font-bold text-lootlab-font-base">
                   {selectedRewardType === "free"
                     ? selectedReward?.rewards.free?.name || "Special Reward"
                     : selectedReward?.rewards.premium?.name || "Premium Reward"}
                 </h2>
 
-                <p className="mb-6 text-base text-lootlab-font-highlight">
+                <p className="font-orbitron mb-6 text-base text-lootlab-font-highlight">
                   {selectedRewardType === "free"
                     ? selectedReward?.rewards.free?.description ||
                       "An incredible Battle Pass reward"

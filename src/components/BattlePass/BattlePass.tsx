@@ -91,10 +91,10 @@ export function BattlePass() {
             <div className="flex items-center gap-3">
               <CheckSquare className="h-8 w-8 text-lootlab-color-highlight" />
               <div>
-                <h3 className="text-lg font-semibold text-lootlab-font-base">
+                <h3 className="font-orbitron text-lg font-semibold text-lootlab-font-base">
                   Completed Tasks
                 </h3>
-                <p className="text-2xl font-bold text-lootlab-color-highlight">
+                <p className="font-orbitron text-2xl font-bold text-lootlab-color-highlight">
                   {completedTasks}/{totalTasks}
                 </p>
               </div>
@@ -105,10 +105,10 @@ export function BattlePass() {
             <div className="flex items-center gap-3">
               <Target className="h-8 w-8 text-lootlab-color-highlight" />
               <div>
-                <h3 className="text-lg font-semibold text-lootlab-font-base">
+                <h3 className="font-orbitron text-lg font-semibold text-lootlab-font-base">
                   XP Earned
                 </h3>
-                <p className="text-2xl font-bold text-lootlab-color-highlight">
+                <p className="font-orbitron text-2xl font-bold text-lootlab-color-highlight">
                   {totalXPEarned.toLocaleString()}
                 </p>
               </div>
@@ -119,10 +119,10 @@ export function BattlePass() {
             <div className="flex items-center gap-3">
               <Trophy className="h-8 w-8 text-lootlab-color-highlight" />
               <div>
-                <h3 className="text-lg font-semibold text-lootlab-font-base">
+                <h3 className="font-orbitron text-lg font-semibold text-lootlab-font-base">
                   Rewards
                 </h3>
-                <p className="text-2xl font-bold text-lootlab-color-highlight">
+                <p className="font-orbitron text-2xl font-bold text-lootlab-color-highlight">
                   {userProgress.unlockedRewards.length}
                 </p>
               </div>
@@ -135,10 +135,10 @@ export function BattlePass() {
           <div className="mb-8 rounded-xl bg-gradient-to-r from-lootlab-color-highlight to-lootlab-hover-highlight p-6 text-white">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="mb-2 text-xl font-bold">
+                <h3 className="font-orbitron mb-2 text-xl font-bold">
                   🔥 Unlock Premium Battle Pass!
                 </h3>
-                <p className="text-white/80">
+                <p className="font-orbitron text-white/80">
                   Get access to exclusive rewards and accelerate your progress
                 </p>
               </div>

@@ -63,10 +63,10 @@ export function BattlePassTiers({
       <div className="rounded-xl border border-[#1F2C47] bg-gradient-to-r from-lootlab-bg-main to-lootlab-bg-main-highlight p-6">
         <div className="mb-4 flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-bold text-lootlab-font-base">
+            <h2 className="font-orbitron text-2xl font-bold text-lootlab-font-base">
               Battle Pass Progress
             </h2>
-            <p className="text-lootlab-font-highlight">
+            <p className="font-orbitron text-lootlab-font-highlight">
               Tier {userProgress.currentTier} / {tiers.length}
             </p>
           </div>
@@ -74,7 +74,7 @@ export function BattlePassTiers({
             <div className="text-sm text-lootlab-font-highlight">
               Current XP
             </div>
-            <div className="text-2xl font-bold text-lootlab-font-base">
+            <div className="font-orbitron text-2xl font-bold text-lootlab-font-base">
               {userProgress.currentXP.toLocaleString()}
             </div>
           </div>
@@ -120,10 +120,10 @@ export function BattlePassTiers({
                     </div>
                   )}
                   <div>
-                    <h3 className="text-xl font-bold text-lootlab-font-base">
+                    <h3 className="font-orbitron text-xl font-bold text-lootlab-font-base">
                       Tier {tier.tier}
                     </h3>
-                    <p className="text-sm text-lootlab-font-highlight">
+                    <p className="font-orbitron text-sm text-lootlab-font-highlight">
                       {tier.xpRequired.toLocaleString()} XP required
                     </p>
                   </div>
@@ -132,7 +132,7 @@ export function BattlePassTiers({
                 {tier.tier === userProgress.currentTier && (
                   <Badge className="border-blue-200 bg-blue-100 text-blue-800">
                     <Star className="mr-1 h-4 w-4" />
-                    Current
+                    aa Current
                   </Badge>
                 )}
               </div>

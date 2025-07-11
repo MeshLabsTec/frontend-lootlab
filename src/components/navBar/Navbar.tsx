@@ -8,7 +8,7 @@ export function NavBar() {
       <Link href="/">
         <h1 className="mr-6 font-russo-one text-2xl">Lootlab</h1>
       </Link>
-      <LinksAndLogin className="hidden" />
+      <LinksAndLogin />
       <div className="md:hidden">
         <DialogNavBar />
       </div>

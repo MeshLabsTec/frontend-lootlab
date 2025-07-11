@@ -28,7 +28,7 @@ export function BattlePassHeader({
           <div className="flex-1">
             <div className="mb-2 flex items-center gap-3">
               <Trophy className="h-8 w-8 text-lootlab-color-highlight" />
-              <h1 className="text-3xl font-bold text-lootlab-font-base">
+              <h1 className="font-orbitron text-3xl font-semibold text-lootlab-font-base">
                 {season.name}
               </h1>
               {hasPremium && (
@@ -37,7 +37,7 @@ export function BattlePassHeader({
                 </div>
               )}
             </div>
-            <p className="mb-4 text-lg text-lootlab-font-highlight">
+            <p className="font-orbitron mb-4 text-lg text-lootlab-font-highlight">
               {season.description}
             </p>
 
@@ -45,19 +45,19 @@ export function BattlePassHeader({
             <div className="flex flex-wrap items-center gap-6">
               <div className="flex items-center gap-2">
                 <Star className="h-5 w-5 text-lootlab-color-highlight" />
-                <span className="font-semibold text-lootlab-font-base">
+                <span className="font-orbitron font-semibold text-lootlab-font-base">
                   Level {userLevel}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-lootlab-font-highlight">Total XP:</span>
-                <span className="font-bold text-lootlab-font-base">
+                <span className="font-orbitron font-bold text-lootlab-font-base">
                   {totalXP.toLocaleString()}
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-lootlab-font-highlight">Multiplier:</span>
-                <span className="font-bold text-lootlab-color-highlight">
+                <span className="font-orbitron font-bold text-lootlab-color-highlight">
                   {season.boostMultiplier}x
                 </span>
               </div>
@@ -75,30 +75,32 @@ export function BattlePassHeader({
             <div className="flex gap-3">
               <div className="text-center">
                 <div className="rounded-lg border border-[#1F2C47] bg-lootlab-bg-main-highlight/80 px-3 py-2 backdrop-blur-sm">
-                  <div className="text-2xl font-bold text-lootlab-font-base">
+                  <div className="font-orbitron text-2xl font-bold text-lootlab-font-base">
                     {timeRemaining.days}
                   </div>
-                  <div className="text-xs text-lootlab-font-highlight">
+                  <div className="font-orbitron text-xs text-lootlab-font-highlight">
                     DAYS
                   </div>
                 </div>
               </div>
               <div className="text-center">
                 <div className="rounded-lg border border-[#1F2C47] bg-lootlab-bg-main-highlight/80 px-3 py-2 backdrop-blur-sm">
-                  <div className="text-2xl font-bold text-lootlab-font-base">
+                  <div className="font-orbitron text-2xl font-bold text-lootlab-font-base">
                     {timeRemaining.hours}
                   </div>
-                  <div className="text-xs text-lootlab-font-highlight">
+                  <div className="font-orbitron text-xs text-lootlab-font-highlight">
                     HOURS
                   </div>
                 </div>
               </div>
               <div className="text-center">
                 <div className="rounded-lg border border-[#1F2C47] bg-lootlab-bg-main-highlight/80 px-3 py-2 backdrop-blur-sm">
-                  <div className="text-2xl font-bold text-lootlab-font-base">
+                  <div className="font-orbitron text-2xl font-bold text-lootlab-font-base">
                     {timeRemaining.minutes}
                   </div>
-                  <div className="text-xs text-lootlab-font-highlight">MIN</div>
+                  <div className="font-orbitron text-xs text-lootlab-font-highlight">
+                    MIN
+                  </div>
                 </div>
               </div>
             </div>

@@ -2,32 +2,87 @@
 
 import { UserTaskProgress, getTasksByType } from "@/mocks/battlePass";
 import { TaskCard } from "./TaskCard";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Clock, Zap, Target, TrendingUp, Calendar } from "lucide-react";
+import { Zap, Target, TrendingUp, Calendar } from "lucide-react";
+import React from "react";
 
 interface TaskListProps {
   userProgress: UserTaskProgress[];
   onClaimReward?: (taskId: string) => void;
 }
 
+function MinimalTaskTabs({
+  value,
+  onChange,
+  counts,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  counts: {
+    daily: number;
+    weekly: number;
+    unique: number;
+    progressive: number;
+  };
+}) {
+  const tabs = [
+    {
+      key: "daily",
+      label: "Daily",
+      icon: <Calendar className="h-5 w-5 text-lootlab-color-highlight" />,
+      count: counts.daily,
+    },
+    {
+      key: "weekly",
+      label: "Weekly",
+      icon: <Zap className="h-5 w-5 text-lootlab-color-highlight" />,
+      count: counts.weekly,
+    },
+    {
+      key: "unique",
+      label: "Unique",
+      icon: <Target className="h-5 w-5 text-lootlab-color-highlight" />,
+      count: counts.unique,
+    },
+    {
+      key: "progressive",
+      label: "Progressive",
+      icon: <TrendingUp className="h-5 w-5 text-lootlab-color-highlight" />,
+      count: counts.progressive,
+    },
+  ];
+  return (
+    <div className="mb-6 flex w-full flex-wrap gap-2 border-b border-slate-700">
+      {tabs.map((tab) => {
+        const active = value === tab.key;
+        return (
+          <button
+            key={tab.key}
+            onClick={() => onChange(tab.key)}
+            className={`font-orbitron relative px-4 py-2 text-base font-bold transition-colors duration-200 ${active ? "text-lootlab-color-highlight" : "text-slate-400"} hover:text-lootlab-color-highlight focus:outline-none`}
+            style={{ minWidth: 100 }}
+          >
+            <span className="flex items-center gap-2">
+              {tab.label}
+              <span
+                className={`ml-1 rounded-full px-2 py-0.5 text-xs font-semibold ${active ? "bg-lootlab-color-highlight/20 text-lootlab-color-highlight" : "bg-slate-700 text-slate-300"}`}
+              >
+                {tab.count}
+              </span>
+              {active && tab.icon}
+            </span>
+            {active && (
+              <span className="absolute -bottom-1 left-2 right-2 h-1 animate-pulse rounded-full bg-gradient-to-r from-lootlab-color-highlight to-lootlab-hover-highlight" />
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export function TaskList({ userProgress, onClaimReward }: TaskListProps) {
   const getTaskProgress = (taskId: string) => {
     return userProgress.find((progress) => progress.taskId === taskId);
-  };
-
-  const getTabIcon = (taskType: string) => {
-    switch (taskType) {
-      case "daily":
-        return <Calendar className="h-4 w-4" />;
-      case "weekly":
-        return <Zap className="h-4 w-4" />;
-      case "unique":
-        return <Target className="h-4 w-4" />;
-      case "progressive":
-        return <TrendingUp className="h-4 w-4" />;
-      default:
-        return <Clock className="h-4 w-4" />;
-    }
   };
 
   const getTaskCounts = () => {
@@ -39,56 +94,32 @@ export function TaskList({ userProgress, onClaimReward }: TaskListProps) {
     return { daily, weekly, unique, progressive };
   };
 
+  const [tab, setTab] = React.useState("daily");
+
   const { daily, weekly, unique, progressive } = getTaskCounts();
 
   return (
     <div className="rounded-xl border border-[#1F2C47] bg-slate-800/40 p-6 backdrop-blur-sm">
       <div className="mb-6">
-        <h2 className="mb-2 text-2xl font-bold text-lootlab-font-base">
+        <h2 className="font-orbitron mb-2 text-2xl font-bold text-lootlab-font-base">
           Battle Pass Tasks
         </h2>
-        <p className="text-lootlab-font-highlight">
+        <p className="font-orbitron text-lootlab-font-highlight">
           Complete tasks to earn XP and progress in the Battle Pass
         </p>
       </div>
-
-      <Tabs defaultValue="daily" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="daily" className="flex items-center gap-2">
-            {getTabIcon("daily")}
-            <span className="hidden sm:inline">Daily</span>
-            <span className="sm:hidden">D</span>
-            <span className="ml-1 rounded-full bg-green-100 px-2 py-1 text-xs text-green-800">
-              {daily.length}
-            </span>
-          </TabsTrigger>
-          <TabsTrigger value="weekly" className="flex items-center gap-2">
-            {getTabIcon("weekly")}
-            <span className="hidden sm:inline">Weekly</span>
-            <span className="sm:hidden">W</span>
-            <span className="ml-1 rounded-full bg-blue-100 px-2 py-1 text-xs text-blue-800">
-              {weekly.length}
-            </span>
-          </TabsTrigger>
-          <TabsTrigger value="unique" className="flex items-center gap-2">
-            {getTabIcon("unique")}
-            <span className="hidden sm:inline">Unique</span>
-            <span className="sm:hidden">U</span>
-            <span className="ml-1 rounded-full bg-purple-100 px-2 py-1 text-xs text-purple-800">
-              {unique.length}
-            </span>
-          </TabsTrigger>
-          <TabsTrigger value="progressive" className="flex items-center gap-2">
-            {getTabIcon("progressive")}
-            <span className="hidden sm:inline">Progressive</span>
-            <span className="sm:hidden">P</span>
-            <span className="ml-1 rounded-full bg-orange-100 px-2 py-1 text-xs text-orange-800">
-              {progressive.length}
-            </span>
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="daily" className="mt-6 space-y-4">
+      <MinimalTaskTabs
+        value={tab}
+        onChange={setTab}
+        counts={{
+          daily: daily.length,
+          weekly: weekly.length,
+          unique: unique.length,
+          progressive: progressive.length,
+        }}
+      />
+      {tab === "daily" && (
+        <div className="mt-6 space-y-4">
           <div className="grid gap-4">
             {daily.map((task) => (
               <TaskCard
@@ -100,13 +131,14 @@ export function TaskList({ userProgress, onClaimReward }: TaskListProps) {
             ))}
           </div>
           {daily.length === 0 && (
-            <div className="py-8 text-center text-lootlab-font-highlight">
+            <div className="font-orbitron py-8 text-center text-lootlab-font-highlight">
               No daily tasks available
             </div>
           )}
-        </TabsContent>
-
-        <TabsContent value="weekly" className="mt-6 space-y-4">
+        </div>
+      )}
+      {tab === "weekly" && (
+        <div className="mt-6 space-y-4">
           <div className="grid gap-4">
             {weekly.map((task) => (
               <TaskCard
@@ -118,13 +150,14 @@ export function TaskList({ userProgress, onClaimReward }: TaskListProps) {
             ))}
           </div>
           {weekly.length === 0 && (
-            <div className="py-8 text-center text-lootlab-font-highlight">
+            <div className="font-orbitron py-8 text-center text-lootlab-font-highlight">
               No weekly tasks available
             </div>
           )}
-        </TabsContent>
-
-        <TabsContent value="unique" className="mt-6 space-y-4">
+        </div>
+      )}
+      {tab === "unique" && (
+        <div className="mt-6 space-y-4">
           <div className="grid gap-4">
             {unique.map((task) => (
               <TaskCard
@@ -136,13 +169,14 @@ export function TaskList({ userProgress, onClaimReward }: TaskListProps) {
             ))}
           </div>
           {unique.length === 0 && (
-            <div className="py-8 text-center text-lootlab-font-highlight">
+            <div className="font-orbitron py-8 text-center text-lootlab-font-highlight">
               No unique tasks available
             </div>
           )}
-        </TabsContent>
-
-        <TabsContent value="progressive" className="mt-6 space-y-4">
+        </div>
+      )}
+      {tab === "progressive" && (
+        <div className="mt-6 space-y-4">
           <div className="grid gap-4">
             {progressive.map((task) => (
               <TaskCard
@@ -154,12 +188,12 @@ export function TaskList({ userProgress, onClaimReward }: TaskListProps) {
             ))}
           </div>
           {progressive.length === 0 && (
-            <div className="py-8 text-center text-lootlab-font-highlight">
+            <div className="font-orbitron py-8 text-center text-lootlab-font-highlight">
               No progressive tasks available
             </div>
           )}
-        </TabsContent>
-      </Tabs>
+        </div>
+      )}
     </div>
   );
 }

@@ -12,11 +12,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import useLogin from "@/hooks/useLogin/useLogin";
-import URLQuery from "@/tools/urlQuery";
 
-import { useRouter, useSearchParams } from "next/navigation";
-
-export function Login() {
+export function Login({
+  open,
+  onClose,
+}: {
+  open: boolean;
+  onClose?: () => void;
+}) {
   const {
     mutation: { mutate, status, data },
     form: {
@@ -26,24 +29,8 @@ export function Login() {
     },
   } = useLogin();
 
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const openModalLogin = searchParams.get("openModalLogin") as "true" | "false";
-
   return (
-    <Dialog
-      open={status === "pending" ? true : openModalLogin === "true"}
-      onOpenChange={() => {
-        router.push(
-          URLQuery.addQuery([
-            {
-              key: "openModalLogin",
-              value: openModalLogin !== "true",
-            },
-          ]),
-        );
-      }}
-    >
+    <Dialog open={open} onOpenChange={(isOpen) => !isOpen && onClose?.()}>
       <DialogTrigger asChild></DialogTrigger>
       <DialogContent className="border-none bg-lootlab-bg-main sm:max-w-[425px]">
         <DialogHeader className="">

@@ -114,10 +114,10 @@ export function TaskCard({ task, progress, onClaimReward }: TaskCardProps) {
         <div className="flex items-center gap-3">
           <div className="text-2xl">{task.icon}</div>
           <div>
-            <h3 className="font-semibold text-lootlab-font-base">
+            <h3 className="font-orbitron font-semibold text-lootlab-font-base">
               {task.name}
             </h3>
-            <p className="text-sm text-lootlab-font-highlight">
+            <p className="font-orbitron text-sm text-lootlab-font-highlight">
               {task.description}
             </p>
           </div>
@@ -139,7 +139,7 @@ export function TaskCard({ task, progress, onClaimReward }: TaskCardProps) {
       <div className="mb-4">
         <div className="mb-2 flex justify-between text-sm">
           <span className="text-lootlab-font-highlight">Progress</span>
-          <span className="font-medium text-lootlab-font-base">
+          <span className="font-orbitron font-medium text-lootlab-font-base">
             {getProgressText()}
           </span>
         </div>
@@ -150,7 +150,7 @@ export function TaskCard({ task, progress, onClaimReward }: TaskCardProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Gift className="h-4 w-4 text-lootlab-color-highlight" />
-          <span className="text-sm font-medium text-lootlab-font-base">
+          <span className="font-orbitron text-sm font-medium text-lootlab-font-base">
             {task.xpReward} XP
           </span>
           {progress?.xpEarned && progress.xpEarned > 0 && (

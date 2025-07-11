@@ -1,47 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import {
-  mockBattlePassSeason,
-  mockBattlePassTiers,
+  battlePassItems,
   mockUserBattlePassProgress,
-  calculateRemainingTime,
 } from "@/mocks/battlePass";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Trophy, Lock, Check, Crown, Gift, Star } from "lucide-react";
+import { BattlePassCard } from "./BattlePassCard";
+import { BattlePassHighlight } from "./BattlePassHighlight";
+import medalha from "../../../public/assets/medalha.png";
+import Image from "next/image";
 
 export function BattlePassModern() {
   const [userProgress, setUserProgress] = useState(mockUserBattlePassProgress);
-  const [selectedReward, setSelectedReward] = useState(
-    mockBattlePassTiers[userProgress.currentTier - 1],
-  );
-  const [selectedRewardType, setSelectedRewardType] = useState<
-    "free" | "premium"
-  >("free");
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [startScrollLeft, setStartScrollLeft] = useState(0);
+  const [highlightedItem, setHighlightedItem] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number>();
 
-  const timeRemaining = calculateRemainingTime(mockBattlePassSeason.endDate);
-
-  // Mostrar tiers ao redor do atual
-  const visibleTiers = mockBattlePassTiers.filter(
-    (tier) =>
-      tier.tier >= Math.max(1, userProgress.currentTier - 2) &&
-      tier.tier <= Math.min(100, userProgress.currentTier + 8),
-  );
-
-  const handleBuyPremium = () => {
-    setUserProgress((prev) => ({ ...prev, hasPremium: true }));
-  };
-
-  const handleClaimReward = (tier: number, rewardType: "free" | "premium") => {
-    setUserProgress((prev) => ({
-      ...prev,
-      unlockedRewards: [
-        ...prev.unlockedRewards,
-        { tier, rewardType, claimedAt: new Date().toISOString() },
-      ],
-    }));
-  };
+  // Largura fixa dos cards e bolinhas
+  const CARD_WIDTH = 204;
 
   const isRewardClaimed = (tier: number, rewardType: "free" | "premium") => {
     return userProgress.unlockedRewards.some(
@@ -49,500 +29,295 @@ export function BattlePassModern() {
     );
   };
 
-  const canClaimReward = (tier: number, rewardType: "free" | "premium") => {
-    if (rewardType === "premium" && !userProgress.hasPremium) return false;
-    if (userProgress.currentTier < tier) return false;
-    return !isRewardClaimed(tier, rewardType);
-  };
+  // Função para dar claim na recompensa
+  function handleClaimReward(tier: number, rewardType: "free" | "premium") {
+    // Evita claim duplicado
+    if (
+      userProgress.unlockedRewards.some(
+        (r) => r.tier === tier && r.rewardType === rewardType,
+      )
+    )
+      return;
 
-  const getCurrentTierProgress = () => {
-    return (userProgress.currentXP / 1000) * 100;
-  };
+    // Marca a recompensa como claimada
+    const newUnlockedRewards = [
+      ...userProgress.unlockedRewards,
+      { tier, rewardType, claimedAt: new Date().toISOString() },
+    ];
 
-  const getProgressRadius = () => {
-    const progress = getCurrentTierProgress();
-    const circumference = 2 * Math.PI * 45; // raio = 45
-    return circumference - (progress / 100) * circumference;
-  };
-
-  const getRarityColor = (rarity: string) => {
-    switch (rarity) {
-      case "COMMON":
-        return "from-gray-400 to-gray-600";
-      case "RARE":
-        return "from-blue-400 to-blue-600";
-      case "EPIC":
-        return "from-purple-400 to-purple-600";
-      case "LEGENDARY":
-        return "from-yellow-400 to-orange-500";
-      default:
-        return "from-gray-400 to-gray-600";
+    // Se for o tier atual, avança para o próximo tier e adiciona XP
+    let newTier = userProgress.currentTier;
+    let newXP = userProgress.currentXP;
+    if (tier === userProgress.currentTier) {
+      newXP += 1000; // Supondo que cada tier = 1000 XP
+      if (newTier < battlePassItems.length) {
+        newTier += 1;
+        newXP = 0;
+      }
     }
+
+    setUserProgress({
+      ...userProgress,
+      unlockedRewards: newUnlockedRewards,
+      currentTier: newTier,
+      currentXP: newXP,
+    });
+  }
+
+  // Novo: Card de destaque sempre mostra o tier atual
+  const currentTierObj = battlePassItems.find(
+    (item) => item.tier === (highlightedItem || userProgress.currentTier),
+  );
+
+  // Função para atualizar o item destacado
+  const handleItemHighlight = (tier: number) => {
+    setHighlightedItem(tier);
   };
+
+  // Funções de pan/scroll com mouse melhoradas
+  const handleMouseDown = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      setIsDragging(true);
+      setStartX(e.clientX);
+      setStartScrollLeft(scrollLeft);
+
+      // Cancelar qualquer animação em andamento
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    },
+    [scrollLeft],
+  );
+
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isDragging) return;
+      e.preventDefault();
+
+      const deltaX = e.clientX - startX;
+      const sensitivity = 1.5; // Sensibilidade do movimento
+      const newScrollLeft = startScrollLeft - deltaX * sensitivity;
+
+      // Limitar o scroll
+      const maxScroll = Math.max(
+        0,
+        battlePassItems.length * 204 - (containerRef.current?.clientWidth || 0),
+      );
+      const clampedScroll = Math.max(0, Math.min(newScrollLeft, maxScroll));
+
+      setScrollLeft(clampedScroll);
+    },
+    [isDragging, startX, startScrollLeft],
+  );
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setIsDragging(false);
+  }, []);
+
+  // Cleanup da animação
+  useEffect(() => {
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isDragging) {
+      document.addEventListener("mousemove", handleMouseMove, {
+        passive: false,
+      });
+      document.addEventListener("mouseup", handleMouseUp);
+
+      return () => {
+        document.removeEventListener("mousemove", handleMouseMove);
+        document.removeEventListener("mouseup", handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-lootlab-bg-main">
-      {/* Background Effects */}
-      <div className="opacity-3 absolute inset-0 bg-[url('/images/hexagono.png')]"></div>
-      <div className="absolute inset-0 bg-gradient-to-br from-lootlab-bg-main via-lootlab-bg-main-highlight/30 to-lootlab-bg-main"></div>
-
-      {/* Floating Elements */}
-      <div className="absolute right-20 top-20 h-32 w-32 animate-pulse rounded-full bg-lootlab-color-highlight/10 blur-3xl"></div>
-      <div className="absolute bottom-32 left-16 h-40 w-40 animate-pulse rounded-full bg-purple-500/5 blur-2xl delay-1000"></div>
-
-      {/* Modern Header */}
-      <div className="relative z-10 p-6">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex items-center justify-between">
-            {/* Left: Season Info */}
-            <div className="flex items-center gap-4">
-              <div className="relative">
-                <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-lootlab-color-highlight/30 bg-gradient-to-br from-lootlab-color-highlight/20 to-lootlab-hover-highlight/20 backdrop-blur-sm">
-                  <Trophy className="h-8 w-8 text-lootlab-color-highlight" />
-                </div>
-                <div className="absolute -right-1 -top-1 flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-r from-lootlab-color-highlight to-lootlab-hover-highlight">
-                  <span className="text-xs font-bold text-white">2</span>
-                </div>
+    <div className="relative min-h-screen bg-lootlab-bg-main">
+      {/* CONTAINER CENTRALIZADO 80% DA TELA */}
+      <div className="mx-auto w-4/5 max-w-screen-xl">
+        {/* HEADER INTEGRADO AO TOPO DA TELA, NÃO FIXO */}
+        <div className="mb-6 flex w-full items-center justify-between bg-gradient-to-b from-lootlab-bg-main/95 to-transparent px-12 py-8">
+          {/* Esquerda: Logo e título */}
+          <div className="flex items-center gap-8">
+            <Image
+              src={medalha}
+              alt="Battle Pass Logo"
+              className="h-20 w-20 object-contain"
+            />
+            <div>
+              <div className="font-orbitron text-4xl leading-tight text-white">
+                BATTLE PASS
               </div>
-              <div>
-                <h1 className="font-russo-one text-xl font-bold text-lootlab-font-base">
-                  {mockBattlePassSeason.name}
-                </h1>
-                <p className="text-xs text-lootlab-font-highlight">
-                  Ends in {timeRemaining.days} days • {timeRemaining.hours}h{" "}
-                  {timeRemaining.minutes}m
-                </p>
-              </div>
-            </div>
-
-            {/* Center: Circular Progress */}
-            <div className="flex items-center gap-8">
-              <div className="relative">
-                <svg className="h-24 w-24 -rotate-90 transform">
-                  {/* Background Circle */}
-                  <circle
-                    cx="48"
-                    cy="48"
-                    r="45"
-                    stroke="rgba(75, 85, 99, 0.3)"
-                    strokeWidth="6"
-                    fill="none"
-                  />
-                  {/* Progress Circle */}
-                  <circle
-                    cx="48"
-                    cy="48"
-                    r="45"
-                    stroke="url(#gradient)"
-                    strokeWidth="6"
-                    fill="none"
-                    strokeDasharray={`${2 * Math.PI * 45}`}
-                    strokeDashoffset={getProgressRadius()}
-                    strokeLinecap="round"
-                    className="transition-all duration-1000 ease-out"
-                  />
-                  <defs>
-                    <linearGradient
-                      id="gradient"
-                      x1="0%"
-                      y1="0%"
-                      x2="100%"
-                      y2="100%"
-                    >
-                      <stop offset="0%" stopColor="#4A90E2" />
-                      <stop offset="100%" stopColor="#357ABD" />
-                    </linearGradient>
-                  </defs>
-                </svg>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold text-lootlab-font-base">
-                      {userProgress.currentTier}
-                    </div>
-                    <div className="text-xs text-lootlab-font-highlight">
-                      TIER
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <div className="text-lg font-bold text-lootlab-color-highlight">
-                  {userProgress.currentXP}
-                </div>
-                <div className="text-xs text-lootlab-font-highlight">
-                  / 1000 XP
-                </div>
-                <div className="mt-1 text-xs text-lootlab-font-highlight">
-                  {1000 - userProgress.currentXP} to next tier
-                </div>
-              </div>
-            </div>
-
-            {/* Right: Premium Status */}
-            <div className="flex items-center gap-4">
-              {!userProgress.hasPremium ? (
-                <Button
-                  onClick={handleBuyPremium}
-                  className="rounded-xl bg-gradient-to-r from-yellow-400 to-orange-500 px-6 py-2 text-white shadow-lg transition-all duration-300 hover:from-yellow-500 hover:to-orange-600"
-                >
-                  <Crown className="mr-2 h-4 w-4" />
-                  Get Premium
-                </Button>
-              ) : (
-                <div className="flex items-center gap-2 rounded-xl border border-yellow-400/30 bg-gradient-to-r from-yellow-400/20 to-orange-500/20 px-4 py-2">
-                  <Crown className="h-4 w-4 text-yellow-400" />
-                  <span className="text-sm font-bold text-yellow-400">
-                    PREMIUM
-                  </span>
-                </div>
-              )}
-
-              <div className="text-right">
-                <div className="text-sm text-lootlab-font-highlight">
-                  Rewards
-                </div>
-                <div className="text-lg font-bold text-lootlab-font-base">
-                  {userProgress.unlockedRewards.length}
-                </div>
+              <div className="mt-2 text-sm font-semibold text-lootlab-font-highlight">
+                G3 BATTLE PASS | SEASON 2 • ENDED ON JUN 30, 2025 09:00AM (BRT)
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      {/* Compact Featured Reward */}
-      <div className="relative z-10 px-6 py-4">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl border border-[#1F2C47] bg-gradient-to-r from-slate-800/40 to-slate-900/40 p-6 backdrop-blur-sm">
-            <div className="flex items-center gap-6">
-              {/* Reward Image */}
-              <div className="flex-shrink-0">
-                <div
-                  className={`h-20 w-20 rounded-xl bg-gradient-to-br ${getRarityColor(
-                    selectedRewardType === "free"
-                      ? selectedReward?.rewards.free?.rarity || "COMMON"
-                      : selectedReward?.rewards.premium?.rarity || "COMMON",
-                  )} p-0.5 shadow-lg`}
-                >
-                  <div className="relative flex h-full w-full items-center justify-center rounded-lg bg-lootlab-bg-main-highlight">
-                    <div
-                      className={`text-2xl ${
-                        (selectedReward &&
-                          selectedReward.tier > userProgress.currentTier) ||
-                        (selectedRewardType === "premium" &&
-                          !userProgress.hasPremium)
-                          ? "opacity-30"
-                          : ""
-                      }`}
-                    >
-                      {selectedRewardType === "free"
-                        ? selectedReward?.rewards.free?.icon || "🎁"
-                        : selectedReward?.rewards.premium?.icon || "👑"}
-                    </div>
-                    {((selectedReward &&
-                      selectedReward.tier > userProgress.currentTier) ||
-                      (selectedRewardType === "premium" &&
-                        !userProgress.hasPremium)) && (
-                      <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/50">
-                        <Lock className="h-6 w-6 text-gray-400" />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Reward Info */}
+          {/* Direita: Barra de progresso global */}
+          <div className="flex min-w-[380px] flex-col items-end gap-2">
+            <div className="flex w-full items-center gap-3">
               <div className="flex-1">
-                <div className="mb-1 flex items-center gap-2">
-                  <Badge
-                    className={`bg-gradient-to-r ${getRarityColor(
-                      selectedRewardType === "free"
-                        ? selectedReward?.rewards.free?.rarity || "COMMON"
-                        : selectedReward?.rewards.premium?.rarity || "COMMON",
-                    )} text-xs text-white`}
-                  >
-                    {selectedRewardType === "free"
-                      ? selectedReward?.rewards.free?.rarity || "COMMON"
-                      : selectedReward?.rewards.premium?.rarity || "COMMON"}
-                  </Badge>
-                  <span className="text-xs text-lootlab-font-highlight">
-                    TIER {selectedReward?.tier}
-                  </span>
-                  {((selectedReward &&
-                    selectedReward.tier > userProgress.currentTier) ||
-                    (selectedRewardType === "premium" &&
-                      !userProgress.hasPremium)) && (
-                    <div className="flex items-center gap-1 text-xs text-gray-500">
-                      <Lock className="h-3 w-3" />
-                      LOCKED
-                    </div>
-                  )}
+                <div className="relative h-5 w-full rounded-full bg-slate-800">
+                  <div
+                    className="absolute left-0 top-0 h-5 rounded-full bg-gradient-to-r from-green-400 to-green-600 transition-all duration-500"
+                    style={{
+                      width: `${((userProgress.currentXP + (userProgress.currentTier - 1) * 1000) / (battlePassItems.length * 1000)) * 100}%`,
+                    }}
+                  ></div>
                 </div>
-
-                <h3
-                  className={`mb-1 text-lg font-bold ${
-                    (selectedReward &&
-                      selectedReward.tier > userProgress.currentTier) ||
-                    (selectedRewardType === "premium" &&
-                      !userProgress.hasPremium)
-                      ? "text-gray-500"
-                      : "text-lootlab-font-base"
-                  }`}
-                >
-                  {selectedRewardType === "free"
-                    ? selectedReward?.rewards.free?.name || "Special Reward"
-                    : selectedReward?.rewards.premium?.name || "Premium Reward"}
-                </h3>
-
-                <p
-                  className={`text-sm ${
-                    (selectedReward &&
-                      selectedReward.tier > userProgress.currentTier) ||
-                    (selectedRewardType === "premium" &&
-                      !userProgress.hasPremium)
-                      ? "text-gray-500"
-                      : "text-lootlab-font-highlight"
-                  }`}
-                >
-                  {selectedReward &&
-                  selectedReward.tier > userProgress.currentTier
-                    ? `Unlock Tier ${selectedReward.tier} to get this reward`
-                    : selectedRewardType === "premium" &&
-                        !userProgress.hasPremium
-                      ? "Get Premium to unlock this reward"
-                      : selectedRewardType === "free"
-                        ? selectedReward?.rewards.free?.description ||
-                          "An incredible Battle Pass reward"
-                        : selectedReward?.rewards.premium?.description ||
-                          "An exclusive premium reward"}
-                </p>
-              </div>
-
-              {/* Action Button */}
-              <div className="flex-shrink-0">
-                {selectedReward &&
-                  selectedRewardType === "free" &&
-                  canClaimReward(selectedReward.tier, "free") && (
-                    <Button
-                      onClick={() =>
-                        handleClaimReward(selectedReward.tier, "free")
-                      }
-                      className="rounded-lg bg-gradient-to-r from-lootlab-color-highlight to-lootlab-hover-highlight px-4 py-2 text-white"
-                    >
-                      <Gift className="mr-2 h-4 w-4" />
-                      Collect
-                    </Button>
-                  )}
-
-                {selectedReward &&
-                  selectedRewardType === "premium" &&
-                  userProgress.hasPremium &&
-                  selectedReward.rewards.premium &&
-                  canClaimReward(selectedReward.tier, "premium") && (
-                    <Button
-                      onClick={() =>
-                        handleClaimReward(selectedReward.tier, "premium")
-                      }
-                      className="rounded-lg bg-gradient-to-r from-yellow-400 to-orange-500 px-4 py-2 text-white"
-                    >
-                      <Crown className="mr-2 h-4 w-4" />
-                      Collect
-                    </Button>
-                  )}
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Modern Tier Grid */}
-      <div className="relative z-10 flex-1 px-6 py-4">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-lg font-bold text-lootlab-font-base">
-              Battle Pass Rewards
-            </h2>
-            <div className="flex items-center gap-2 text-sm text-lootlab-font-highlight">
-              <Star className="h-4 w-4" />
-              <span>
-                {userProgress.unlockedRewards.length} / {visibleTiers.length}{" "}
-                collected
+            <div className="mt-2 flex w-full items-center justify-between gap-4 text-sm text-white">
+              <span className="font-bold text-green-300">FREE PASS</span>
+              <span className="text-green-300">
+                XP {userProgress.currentXP.toLocaleString()} /{" "}
+                {(battlePassItems.length * 1000).toLocaleString()}
+              </span>
+              <span className="text-blue-300">
+                TIER {userProgress.currentTier} / {battlePassItems.length}
               </span>
             </div>
           </div>
+        </div>
 
-          {/* Tier Grid */}
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {visibleTiers.map((tier) => (
+        {/* DESTAQUE CENTRAL DO ITEM */}
+        <BattlePassHighlight
+          currentTierObj={currentTierObj}
+          isRewardClaimed={isRewardClaimed}
+        />
+
+        {/* TRILHA DE RECOMPENSAS HORIZONTAL */}
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pb-12">
+          <div className="mb-6 flex items-center justify-center">
+            <div className="flex w-full items-center gap-4">
+              <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-400 to-transparent"></div>
+              <h2 className="font-orbitron whitespace-nowrap text-sm text-white">
+                BATTLE PASS REWARDS{" "}
+                <span className="font-normal text-green-400">
+                  {userProgress.currentTier} / {battlePassItems.length}
+                </span>
+              </h2>
+              <div className="h-px flex-1 bg-gradient-to-l from-transparent via-slate-400 to-transparent"></div>
+            </div>
+          </div>
+
+          {/* Container dos cards com pan/scroll suavizado */}
+          <div
+            ref={containerRef}
+            className="relative overflow-hidden rounded-lg"
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeave}
+            style={{
+              cursor: isDragging ? "grabbing" : "grab",
+              userSelect: "none",
+              touchAction: "none",
+            }}
+          >
+            <div
+              className="flex items-end gap-3 px-2 py-2 pb-6"
+              style={{
+                transform: `translateX(-${scrollLeft}px)`,
+                minWidth: "max-content",
+                willChange: "transform",
+              }}
+            >
+              {battlePassItems.map((item) => {
+                const isUnlocked = item.tier <= userProgress.currentTier;
+                const isClaimed = isRewardClaimed(item.tier, "free");
+                const isPremium = item.type === "PREMIUM";
+
+                return (
+                  <BattlePassCard
+                    key={item.tier}
+                    tier={item.tier}
+                    reward={{
+                      name: item.name,
+                      description: item.description,
+                      image: item.image,
+                      icon: item.icon,
+                      type: item.type,
+                      rarity: item.rarity,
+                      xpReward: item.xpReward,
+                      category: item.category,
+                    }}
+                    isUnlocked={isUnlocked}
+                    isClaimed={isClaimed}
+                    isPremium={isPremium}
+                    onClaim={(tier, rewardType) =>
+                      handleClaimReward(tier, rewardType || "free")
+                    }
+                    onHighlight={handleItemHighlight}
+                    isHighlighted={highlightedItem === item.tier}
+                  />
+                );
+              })}
+            </div>
+          </div>
+
+          {/* BARRA DE PROGRESSO ABAIXO DOS CARDS */}
+          <div
+            className="relative mt-4 overflow-hidden rounded-lg"
+            style={{ height: 40 }}
+          >
+            {/* Container da barra de progresso com scroll sincronizado */}
+            <div
+              className="relative flex pb-4"
+              style={{
+                transform: `translateX(-${scrollLeft}px)`,
+                minWidth: "max-content",
+                willChange: "transform",
+              }}
+            >
+              {/* Linha de fundo (toda a extensão) */}
+              <div className="absolute left-0 top-[40%] z-0 h-1 w-full -translate-y-1/2 rounded-full bg-slate-800" />
+              {/* Linha de progresso animada */}
               <div
-                key={tier.tier}
-                className="rounded-xl border border-[#1F2C47] bg-gradient-to-br from-slate-800/30 to-slate-900/30 p-4 backdrop-blur-sm transition-all duration-300 hover:border-lootlab-color-highlight/30"
-              >
-                {/* Tier Header */}
-                <div className="mb-3 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div
-                      className={`flex h-8 w-8 items-center justify-center rounded-lg ${
-                        tier.tier <= userProgress.currentTier
-                          ? "bg-gradient-to-br from-lootlab-color-highlight/20 to-lootlab-hover-highlight/20"
-                          : "bg-slate-700/30"
-                      }`}
-                    >
-                      <span
-                        className={`text-xs font-bold ${
-                          tier.tier <= userProgress.currentTier
-                            ? "text-lootlab-color-highlight"
-                            : "text-gray-500"
-                        }`}
-                      >
-                        {tier.tier}
-                      </span>
-                    </div>
-                    <span
-                      className={`text-xs ${
-                        tier.tier <= userProgress.currentTier
-                          ? "text-lootlab-font-highlight"
-                          : "text-gray-500"
-                      }`}
-                    >
-                      {tier.xpRequired} XP
-                    </span>
-                  </div>
-                  {tier.tier <= userProgress.currentTier ? (
-                    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-r from-lootlab-color-highlight to-lootlab-hover-highlight">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
-                  ) : (
-                    <div className="flex h-6 w-6 items-center justify-center rounded-full bg-slate-700/50">
-                      <Lock className="h-3 w-3 text-gray-500" />
-                    </div>
-                  )}
-                </div>
-
-                {/* Rewards */}
-                <div className="space-y-2">
-                  {/* Free Reward */}
+                className="absolute left-0 top-[40%] z-10 h-1 -translate-y-1/2 rounded-full bg-gradient-to-r from-green-400 to-green-600 transition-all duration-700"
+                style={{
+                  width: `${((userProgress.currentTier - 1) / (battlePassItems.length - 1)) * 100}%`,
+                  maxWidth: "100%",
+                }}
+              />
+              {/* Bolinhas centralizadas na linha, alinhadas com os cards */}
+              {battlePassItems.map((item) => {
+                const isUnlocked = item.tier < userProgress.currentTier;
+                const isActive = item.tier === userProgress.currentTier;
+                const isPremium = item.type === "PREMIUM";
+                return (
                   <div
-                    onClick={() => {
-                      setSelectedReward(tier);
-                      setSelectedRewardType("free");
-                    }}
-                    className={`flex cursor-pointer items-center gap-3 rounded-lg p-2 transition-all ${
-                      tier.tier === selectedReward?.tier &&
-                      selectedRewardType === "free"
-                        ? "border border-lootlab-color-highlight/50 bg-lootlab-color-highlight/20"
-                        : "bg-slate-800/30 hover:bg-slate-800/50"
-                    }`}
+                    key={item.tier}
+                    className="relative flex items-center justify-center"
+                    style={{ width: CARD_WIDTH, height: 40 }}
                   >
                     <div
-                      className={`relative flex h-10 w-10 items-center justify-center rounded-lg ${
-                        tier.tier <= userProgress.currentTier
-                          ? "bg-lootlab-bg-main-highlight"
-                          : "bg-slate-700/50"
+                      className={`mx-auto flex h-8 w-8 items-center justify-center rounded-full border-2 shadow-md transition-all duration-300 ${
+                        isUnlocked
+                          ? "border-green-400 bg-green-400 text-white"
+                          : isActive
+                            ? "scale-110 border-green-400 bg-white text-green-500 shadow-lg"
+                            : isPremium
+                              ? "border-purple-400 bg-purple-400/30 text-purple-400"
+                              : "border-slate-700 bg-slate-800 text-slate-400"
                       }`}
+                      style={{ zIndex: 30 }}
                     >
-                      <span
-                        className={`text-lg ${
-                          tier.tier <= userProgress.currentTier
-                            ? ""
-                            : "opacity-30"
-                        }`}
-                      >
-                        {tier.rewards.free?.icon}
-                      </span>
-                      {tier.tier > userProgress.currentTier && (
-                        <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/50">
-                          <Lock className="h-3 w-3 text-gray-400" />
-                        </div>
-                      )}
+                      {item.tier}
                     </div>
-                    <div className="min-w-0 flex-1">
-                      <div
-                        className={`truncate text-xs font-medium ${
-                          tier.tier <= userProgress.currentTier
-                            ? "text-lootlab-font-base"
-                            : "text-gray-500"
-                        }`}
-                      >
-                        {tier.rewards.free?.name}
-                      </div>
-                      <div className="text-xs text-lootlab-color-highlight">
-                        FREE
-                      </div>
-                    </div>
-                    {isRewardClaimed(tier.tier, "free") ? (
-                      <Check className="h-4 w-4 text-lootlab-color-highlight" />
-                    ) : tier.tier > userProgress.currentTier ? (
-                      <Lock className="h-4 w-4 text-gray-500" />
-                    ) : null}
                   </div>
-
-                  {/* Premium Reward */}
-                  <div
-                    onClick={() => {
-                      setSelectedReward(tier);
-                      setSelectedRewardType("premium");
-                    }}
-                    className={`flex cursor-pointer items-center gap-3 rounded-lg p-2 transition-all ${
-                      tier.tier === selectedReward?.tier &&
-                      selectedRewardType === "premium"
-                        ? "border border-yellow-400/50 bg-yellow-400/20"
-                        : "bg-slate-800/30 hover:bg-slate-800/50"
-                    }`}
-                  >
-                    <div
-                      className={`relative flex h-10 w-10 items-center justify-center rounded-lg ${
-                        tier.tier <= userProgress.currentTier &&
-                        userProgress.hasPremium
-                          ? "bg-gradient-to-br from-yellow-900/30 to-orange-900/30"
-                          : "bg-slate-700/50"
-                      }`}
-                    >
-                      <span
-                        className={`text-lg ${
-                          tier.tier <= userProgress.currentTier &&
-                          userProgress.hasPremium
-                            ? ""
-                            : "opacity-30"
-                        }`}
-                      >
-                        {tier.rewards.premium?.icon || "👑"}
-                      </span>
-                      {(tier.tier > userProgress.currentTier ||
-                        !userProgress.hasPremium) && (
-                        <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/50">
-                          <Lock className="h-3 w-3 text-gray-400" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <div
-                        className={`truncate text-xs font-medium ${
-                          tier.tier <= userProgress.currentTier &&
-                          userProgress.hasPremium
-                            ? "text-lootlab-font-base"
-                            : "text-gray-500"
-                        }`}
-                      >
-                        {tier.rewards.premium?.name || "Premium Reward"}
-                      </div>
-                      <div className="flex items-center gap-1 text-xs text-yellow-400">
-                        <Crown className="h-3 w-3" />
-                        PREMIUM
-                      </div>
-                    </div>
-                    {userProgress.hasPremium &&
-                    isRewardClaimed(tier.tier, "premium") ? (
-                      <Check className="h-4 w-4 text-yellow-400" />
-                    ) : tier.tier > userProgress.currentTier ||
-                      !userProgress.hasPremium ? (
-                      <Lock className="h-4 w-4 text-gray-500" />
-                    ) : null}
-                  </div>
-                </div>
-              </div>
-            ))}
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
